@@ -1,4 +1,6 @@
 # Import Modules
+from collections import defaultdict
+
 import pygame as pg
 import random
 
@@ -6,6 +8,7 @@ from sprites.hud import HUD
 from sprites.player import Player
 from sprites.potion import Potion
 from sprites.wall import Wall
+from util.spawning import chance_spawn
 
 
 def main():
@@ -45,6 +48,9 @@ def main():
     allsprites = pg.sprite.RenderPlain(player, walls, hud)
     player.walls = walls.sprites()
 
+    # Tracker
+    item_count = defaultdict(lambda: 0)
+
     # Main Loop
     going = True
     while going:
@@ -59,10 +65,11 @@ def main():
             if event.type == pg.KEYDOWN and event.key == pg.K_0:  # TODO: Replace me with
                 player.health -= 1
 
-        if random.randint(0, 5) == 4:  # 2000% chance to spawn a random HP bottle. TODO: Replace me with actual logic!
+        if random.random() < chance_spawn(item_count[Potion]):  # TODO: Replace me with actual logic!
             allsprites.add(Potion())
+            item_count[Potion] = item_count[Potion] + 1
 
-        # update player everything (movement, attack frame, health)
+        # update player (movement, attack frame, health)
         player.update()
 
         # draw
