@@ -13,7 +13,11 @@ class Player(pg.sprite.Sprite):
         self.area = screen.get_rect()
         self.rect.topleft = 10, 10
         self.move = 9
-        self.dizzy = 0
+        self.attack_cooldown = 0
+        self.attack_box = (self.rect.x + 10, self.rect.y + 10, 10, 10)
+
+    def calc_hitbox(self):
+        self.attack_box = (self.rect.x + 10, self.rect.y + 10, 10, 10)
 
     def handle_keys(self):
         """ Handles Keys """
@@ -31,6 +35,16 @@ class Player(pg.sprite.Sprite):
             x += dist
         self.rect.x += x
         self.rect.y += y
+        self.calc_hitbox()
+
+        if keys[pg.K_SPACE]:
+            self.attack()
+
+
+    def attack(self):
+        if not self.attack_cooldown:
+            self.attack_cooldown = 10
+
 
     # def update(self):
     #     """walk or spin, depending on the monkeys state"""

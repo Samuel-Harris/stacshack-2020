@@ -17,7 +17,7 @@ def main():
     pg.display.set_caption("Monkey Fever")
     pg.mouse.set_visible(0)
 
-    # Create The Backgound
+    # Create The Background
     background = pg.Surface(screen.get_size())
     background = background.convert()
     background.fill((250, 250, 250))
@@ -44,7 +44,7 @@ def main():
     while going:
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                crashed = True
+                going = False
 
         # player movement
         # keys = pg.key.get_pressed()
@@ -54,16 +54,18 @@ def main():
         # draw
         screen.fill((255, 255, 255))
 
+
         allsprites.update()
         pg.display.update()
 
         # Draw Everything
         screen.blit(background, (0, 0))
         allsprites.draw(screen)
+        pg.draw.rect(background, (255, 0, 0), player.attack_box, 2)
         pg.display.flip()
 
         clock.tick(60)
-
+        player.attack_cooldown -= 1
         # Handle Input Events
         # for event in pg.event.get():
         #     if event.type == pg.QUIT:
