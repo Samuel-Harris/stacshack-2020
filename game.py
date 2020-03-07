@@ -61,6 +61,9 @@ def main():
                                             invisible_right_wall)
     allsprites = pg.sprite.RenderPlain(player, walls, collision_walls, hud)
     player.walls = collision_walls.sprites()
+
+    bullet_list = []
+
     enemy_list = []
     for enemy in enemy_list:
         allsprites.add(enemy)
@@ -94,7 +97,7 @@ def main():
             item_count[Potion] = item_count[Potion] + 1
 
         # if random.random() < chance_spawn(item_count[Enemy]):
-        if random.random() < 0.8:
+        if random.random() < 0.02:
             enemy = Enemy(screen_width, screen_height, player.rect.center)
             enemy_list.append(enemy)
             allsprites.add(enemy)
@@ -115,8 +118,32 @@ def main():
                     if player.damage_cooldown == 0:
                         player.get_hurt()
 
+                # get each enemy to go through a 'shoot' cycle; returns None if no bullet generated
+                bullet = enemy.shoot(player.rect.x+50, player.rect.y+50)
+                if bullet:
+                    bullet_list.append(bullet)
+                    allsprites.add(bullet)
+
+            for bullet in bullet_list:
+                remove = False
+                # hit by player attack
+                if player.attack and player.attack_box.colliderect(bullet.hurtbox):
+                    remove = True
+                # hits player
+                elif player.hurtbox.colliderect(bullet.hurtbox):
+                    if player.damage_cooldown == 0:
+                        player.get_hurt()
+                    remove = True
+                # off screen
+                elif bullet.rect.x < 100 or bullet.rect.x > screen_width-100 \
+                        or bullet.rect.y < 100 or bullet.rect.y > screen_height-100:
+                    remove = True
+
+                if remove:
+                    bullet_list.remove(bullet)
+                    bullet.kill()
+
         # draw
-        # screen.fill((255, 255, 255))
         allsprites.update()
 
         # Draw Everything
