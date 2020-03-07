@@ -8,14 +8,15 @@ class Player(pg.sprite.Sprite):
     """The player model"""
 
     def __init__(self, screen_width, screen_height, potion_list):
+        pg.sprite.Sprite.__init__(self)  # call Sprite intializer
+        self.image, self.rect = load_image("player/player_default.png", -1)
+
         # for showing hitboxes
         self.hitbox_debug = True
 
         self.sprite_img_radius = 50
         self.sprite_char_radius = 15
         self.hitbox_radius = 10
-        pg.sprite.Sprite.__init__(self)  # call Sprite intializer
-        self.image, self.rect = load_image("player/player_default.png", -1)
         self.rect.x = 100
         self.rect.y = 100
         screen = pg.display.get_surface()

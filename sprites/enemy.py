@@ -7,11 +7,11 @@ from util.load import load_image
 class Enemy(pg.sprite.Sprite):
 
     def __init__(self, screen_width, screen_height):
-        # hitbox debug
-        self.hitbox_debug = True
-
         pg.sprite.Sprite.__init__(self)
         self.image, self.rect = load_image("enemy/enemy1_big.png", -1)
+
+        # hitbox debug
+        self.hitbox_debug = True
 
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
