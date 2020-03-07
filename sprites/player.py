@@ -75,16 +75,13 @@ class Player(pg.sprite.Sprite):
             self.damage_images.append(pg.image.load(filename))
 
         # hurtbox data
-        self.hurtbox = pg.Rect(self.rect.x + 40, self.rect.y + 40, 30, 30)
+        self.hurtbox = pg.Rect(self.rect.x + 30, self.rect.y + 30, 30, 30)
         self.damage_cooldown = 0
 
-        self.char_box = pg.sprite.Sprite()
-        self.char_box.rect = pg.Rect(self.rect.x, self.rect.y, 30, 30)
 
     def calc_hitboxes(self):
         self.attack_box = pg.Rect(self.rect.x + 25, self.rect.y, 50, 50)
-        self.hurtbox = pg.Rect(self.rect.x + 40, self.rect.y + 40, 30, 30)
-        self.char_box.rect = pg.Rect(self.rect.x + 40, self.rect.y + 40, 30, 30)
+        self.hurtbox = pg.Rect(self.rect.x + 35, self.rect.y + 35, 30, 30)
 
     def update(self):
         self.handle_keys()
