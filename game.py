@@ -31,7 +31,7 @@ def main():
 
     # Display The Background
     screen.blit(background, (0, 0))
-    pg.display.flip()
+    # pg.display.flip()
 
     # Prepare Game Objects
     clock = pg.time.Clock()
@@ -47,37 +47,20 @@ def main():
                 going = False
 
         # player movement
-        # keys = pg.key.get_pressed()
-        # x, y = player_move(keys, x, y)
         player.handle_keys()
+
 
         # draw
         screen.fill((255, 255, 255))
 
         allsprites.update()
-        pg.display.update()
 
         # Draw Everything
-        screen.blit(background, (0, 0))
+        # screen.blit(background, (0, 0))
         allsprites.draw(screen)
         pg.display.flip()
 
         clock.tick(60)
-
-        # Handle Input Events
-        # for event in pg.event.get():
-        #     if event.type == pg.QUIT:
-        #         going = False
-        #     elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-        #         going = False
-            # elif event.type == pg.MOUSEBUTTONDOWN:
-            #     if fist.punch(chimp):
-            #         punch_sound.play()  # punch
-            #         chimp.punched()
-            #     else:
-            #         whiff_sound.play()  # miss
-            # elif event.type == pg.MOUSEBUTTONUP:
-            #     fist.unpunch()
 
     pg.quit()
 
