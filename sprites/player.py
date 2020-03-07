@@ -7,7 +7,7 @@ from util.load import load_image
 class Player(pg.sprite.Sprite):
     """The player model"""
 
-    def __init__(self, screen_width, screen_height):
+    def __init__(self, screen_width, screen_height, potion_list):
         self.sprite_img_radius = 50
         self.sprite_char_radius = 15
         self.hitbox_radius = 10
@@ -50,11 +50,12 @@ class Player(pg.sprite.Sprite):
             for y in range(self.attack_ready_bar.get_height()):
                 self.attack_ready_bar.set_at((x, y), pg.Color(100, 100, 100))
 
+        self.potions = potion_list
         # self.attack_ready_rect = self.attack_ready_bar.get_rect(topleft=(200, 100))
 
 
         # hurtbox data
-        self.hurtbox = (self.rect.x, self.rect.y, 20, 20)
+        self.hurtbox = pg.Rect(self.rect.x + 40, self.rect.y + 40, 30, 30)
 
         self.char_box = pg.sprite.Sprite()
         self.char_box.rect = pg.Rect(self.rect.x, self.rect.y, 30, 30)
@@ -143,6 +144,18 @@ class Player(pg.sprite.Sprite):
                 self.rect.bottom = block.rect.top
             else:
                 self.rect.top = block.rect.bottom
+
+        # Did this update cause us to hit a potion?
+        potion_hit_list = pg.sprite.spritecollide(self, self.potions, False)
+        for potion in potion_hit_list:
+            if self.hurtbox.colliderect(potion):
+                # If we are moving right, set our right side to the left side of
+                # the item we hit
+                potion.kill()
+                self.potions.remove(potion)
+                if self.health < 8:
+                    self.health += 1
+                print("health found")
 
         self.calc_hitboxes()
 
