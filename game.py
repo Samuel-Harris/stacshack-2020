@@ -48,12 +48,11 @@ def main():
         player.handle_keys()
 
         # draw
-        screen.fill((255, 255, 255))
-
+        # screen.fill((255, 255, 255))
         allsprites.update()
 
         # Draw Everything
-        # screen.blit(background, (0, 0))
+        screen.blit(background, (0, 0))
         allsprites.draw(screen)
         pg.display.flip()
 
