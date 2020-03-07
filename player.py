@@ -3,8 +3,7 @@ from load import load_image
 
 
 class Player(pg.sprite.Sprite):
-    """moves a monkey critter across the screen. it can spin the
-       monkey when it is punched."""
+    """The player model"""
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)  # call Sprite intializer
@@ -12,6 +11,7 @@ class Player(pg.sprite.Sprite):
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
         self.rect.topleft = 10, 10
+        self.health = 5
         self.move = 9
         self.attack_cooldown = 0
         self.attack_box = (self.rect.x + 10, self.rect.y + 10, 10, 10)
@@ -21,7 +21,6 @@ class Player(pg.sprite.Sprite):
 
     def handle_keys(self):
         """ Handles Keys """
-        key = pg.key.get_pressed()
         dist = 5  # distance moved in 1 frame, try changing it to 5
         x, y = 0, 0
         keys = pg.key.get_pressed()

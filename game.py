@@ -1,6 +1,7 @@
 # Import Modules
 import pygame as pg
 
+from hud import HUD
 from player import Player
 from wall import Wall
 
@@ -9,12 +10,13 @@ def main():
     """this function is called when the program starts.
        it initializes everything it needs, then runs in
        a loop until the function returns."""
+
     # Initialize Everything
     pg.init()
     screen_width = 800
     screen_height = 600
     screen = pg.display.set_mode((screen_width, screen_height))
-    pg.display.set_caption("Monkey Fever")
+    pg.display.set_caption("Bullet Hell Thing")
     pg.mouse.set_visible(0)
 
     # Create The Background
@@ -23,21 +25,17 @@ def main():
     background.fill((250, 250, 250))
 
     # Put Text On The Background, Centered
-    # if pg.font:
-    #     font = pg.font.Font(None, 36)
-    #     text = font.render("Pummel The Chimp, And Win $$$", 1, (10, 10, 10))
-    #     textpos = text.get_rect(centerx=background.get_width() / 2)
-    #     background.blit(text, textpos)
 
     # Display The Background
     screen.blit(background, (0, 0))
-    pg.display.flip()
+    # pg.display.flip()
 
     # Prepare Game Objects
     clock = pg.time.Clock()
     player = Player()
+    hud = HUD(player)
     top_wall = Wall(0, 0, screen_width, 10)
-    allsprites = pg.sprite.RenderPlain(player)
+    allsprites = pg.sprite.RenderPlain((player, hud))
 
     # Main Loop
     going = True
@@ -47,8 +45,6 @@ def main():
                 going = False
 
         # player movement
-        # keys = pg.key.get_pressed()
-        # x, y = player_move(keys, x, y)
         player.handle_keys()
 
         # draw
@@ -56,32 +52,19 @@ def main():
 
 
         allsprites.update()
-        pg.display.update()
 
         # Draw Everything
-        screen.blit(background, (0, 0))
+        # screen.blit(background, (0, 0))
         allsprites.draw(screen)
         pg.draw.rect(background, (255, 0, 0), player.attack_box, 2)
         pg.display.flip()
 
         clock.tick(60)
         player.attack_cooldown -= 1
-        # Handle Input Events
-        # for event in pg.event.get():
-        #     if event.type == pg.QUIT:
-        #         going = False
-        #     elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-        #         going = False
-            # elif event.type == pg.MOUSEBUTTONDOWN:
-            #     if fist.punch(chimp):
-            #         punch_sound.play()  # punch
-            #         chimp.punched()
-            #     else:
-            #         whiff_sound.play()  # miss
-            # elif event.type == pg.MOUSEBUTTONUP:
-            #     fist.unpunch()
+
 
     pg.quit()
+
 
 if __name__ == '__main__':
     main()
