@@ -65,7 +65,6 @@ def main():
     enemy_list.append(Enemy(screen_width, screen_height))
     for enemy in enemy_list:
         allsprites.add(enemy)
-    player.walls = walls.sprites()
 
     # Tracker
     item_count = defaultdict(lambda: 0)
