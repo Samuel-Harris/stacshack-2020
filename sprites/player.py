@@ -135,7 +135,7 @@ class Player(pg.sprite.Sprite):
     def handle_keys(self):
         """ Handles Keys for movement """
         keys = pg.key.get_pressed()
-        if keys[pg.KMOD_SHIFT]:
+        if keys[pg.K_RSHIFT] or keys[pg.K_LSHIFT]:
             speed = self.dist // 2
         else:
             speed = self.dist
