@@ -114,7 +114,7 @@ def main():
 
             if player.hurtbox.colliderect(enemy.hurtbox):
                 if player.damage_cooldown == 0:
-                    player.take_damage()
+                    player.get_hurt()
 
         # draw
         # screen.fill((255, 255, 255))

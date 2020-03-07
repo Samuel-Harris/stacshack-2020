@@ -176,8 +176,7 @@ class Player(pg.sprite.Sprite):
             if self.hurtbox.colliderect(potion):
                 potion.kill()
                 self.potions.remove(potion)
-                if self.health < 8:
-                    self.health += 1
+                self.get_heal()
 
         self.calc_hitboxes()
 
@@ -188,38 +187,45 @@ class Player(pg.sprite.Sprite):
             self.attack_frame = 0
             self.attack_cooldown = 100
 
+    def get_heal(self):
+        if self.health < 8:
+            self.health += 1
+            self.heal = True
+            self.heal_frame = 0
+
+    def get_hurt(self):
+        if self.health > 0 and self.damage_cooldown == 0:
+            self.health -= 1
+            self.damage = True
+            self.damage_frame = 0
+            self.damage_cooldown = 500
+
     def handle_damage(self):
         """ Handles sprite display upon recovering/healing damage """
-        # check for showing damage before healing
-        if self.damage:
-            if self.damage_frame < 3:
-                self.image = self.damage_images[math.floor(self.damage_frame)]
-                self.damage_frame += 0.5
-            else:  # where damage_frame == 3, so end attack_ready animation
-                self.damage = False
-                self.damage_frame = 0
-                self.image = pg.image.load("art/player/player_default.png")
-        elif self.heal:
+        # update damage_cooldown
+        if self.damage_cooldown > 0:
+            self.damage_cooldown -= 1
+
+        # check for healing before damage; receiving healing overrides damage animation for a short while
+        if self.heal:
             if self.heal_frame < 3:
                 self.image = self.heal_images[math.floor(self.heal_frame)]
-                self.heal_frame += 0.5
+                self.heal_frame += 0.1
             else:  # where heal_frame == 3, so end attack_ready animation
                 self.heal = False
                 self.heal_frame = 0
                 self.image = pg.image.load("art/player/player_default.png")
+        elif self.damage:
+            if self.damage_cooldown > 0:
+                self.image = self.damage_images[math.floor(self.damage_frame) % 3]
+                self.damage_frame += 0.1
+            else:  # where damage_cooldown has ended == 3, so end attack_ready animation
+                self.damage = False
+                self.damage_frame = 0
+                self.image = pg.image.load("art/player/player_default.png")
+
 
         pass
-
-    def handle_health(self):
-        """ Handles sprite display depending on health """  # TODO: Remove? Health is part of HUD, not player
-
-        if self.damage_cooldown > 0:
-            self.damage_cooldown -= 1
-
-
-    def take_damage(self):
-        self.health -= 1
-        self.damage_cooldown = 500
 
 
     # def update(self):
