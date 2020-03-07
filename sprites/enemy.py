@@ -1,4 +1,5 @@
 from random import randint
+from scipy.spatial import distance
 
 import pygame as pg
 from util.load import load_image
@@ -6,7 +7,7 @@ from util.load import load_image
 
 class Enemy(pg.sprite.Sprite):
 
-    def __init__(self, screen_width, screen_height):
+    def __init__(self, screen_width, screen_height, player_coordinates):
         pg.sprite.Sprite.__init__(self)
         self.image, self.rect = load_image("enemy/enemy1_big.png", -1)
 
@@ -23,6 +24,8 @@ class Enemy(pg.sprite.Sprite):
         self.screen_height = screen_height
         self.walls = None
         self.rect.topleft = randint(0, screen_width - 80), randint(0, screen_height - 80)
+        while distance.euclidean(self.rect.topleft, player_coordinates) < 200:
+            self.rect.topleft = randint(0, screen_width - 80), randint(0, screen_height - 80)
         self.health = 1
         self.move = 9
 
