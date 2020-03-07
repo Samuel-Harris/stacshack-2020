@@ -17,8 +17,8 @@ class Player(pg.sprite.Sprite):
         self.sprite_img_radius = 50
         self.sprite_char_radius = 15
         self.hitbox_radius = 10
-        self.rect.x = 100
-        self.rect.y = 100
+        self.rect.x = 350
+        self.rect.y = 450
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
         self.dist = 2
