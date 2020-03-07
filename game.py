@@ -133,9 +133,9 @@ def main():
                     if player.damage_cooldown == 0:
                         player.get_hurt()
                     remove = True
-                # off screen
-                elif bullet.rect.x < 100 or bullet.rect.x > screen_width-100 \
-                        or bullet.rect.y < 100 or bullet.rect.y > screen_height-100:
+                # off screen; add 20 to coordinates to centre it (knife is 40x40 px)
+                elif bullet.rect.x+20 < 10 or bullet.rect.x+20 > screen_width-10 \
+                        or bullet.rect.y+20 < 10 or bullet.rect.y+20 > screen_height-10:
                     remove = True
 
                 if remove:
