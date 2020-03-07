@@ -8,7 +8,7 @@ class Player(pg.sprite.Sprite):
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)  # call Sprite intializer
-        self.image, self.rect = load_image("chimp.bmp", -1)
+        self.image, self.rect = load_image("player/player_default.png", -1)
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
         self.rect.topleft = 10, 10
