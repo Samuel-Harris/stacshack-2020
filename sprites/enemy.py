@@ -26,10 +26,10 @@ class Enemy(pg.sprite.Sprite):
         self.health = 1
         self.move = 9
 
-        self.hurtbox = pg.Rect(self.rect.centerx, self.rect.centery, 50, 50)
+        self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 60, 60)
 
     def calc_hitboxes(self):
-        self.hurtbox = pg.Rect(self.rect.centerx, self.rect.centery, 50, 50)
+        self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 60, 60)
 
     def kill_enemy(self, player):
         player.score += 1
