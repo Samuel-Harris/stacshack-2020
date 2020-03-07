@@ -2,10 +2,10 @@
 import pygame as pg
 import random
 
-from hud import HUD
-from player import Player
-from potion import Potion
-from wall import Wall
+from sprites.hud import HUD
+from sprites.player import Player
+from sprites.potion import Potion
+from sprites.wall import Wall
 
 
 def main():

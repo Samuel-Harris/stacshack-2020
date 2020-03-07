@@ -1,7 +1,7 @@
 from random import randint
 
 import pygame as pg
-from load import load_image
+from util.load import load_image
 
 
 class Potion(pg.sprite.Sprite):
@@ -14,8 +14,5 @@ class Potion(pg.sprite.Sprite):
         self.area = screen.get_rect()
         self.rect.topleft = randint(0, 800), randint(0, 600)
 
-    def _update_hearts_display(self):
-        pass
-
     def update(self):
-        self._update_hearts_display()
+        pass

@@ -1,7 +1,7 @@
 import math
 
 import pygame as pg
-from load import load_image
+from util.load import load_image
 
 
 class Player(pg.sprite.Sprite):
