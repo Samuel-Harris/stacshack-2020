@@ -24,16 +24,15 @@ direction = None
 player_speed = 0
 
 
-def player_move(direction, x, y):
-    if direction:
-        if direction == pygame.K_UP:
-            y -= 5
-        elif direction == pygame.K_DOWN:
-            y += 5
-        if direction == pygame.K_LEFT:
-            x -= 5
-        elif direction == pygame.K_RIGHT:
-            x += 5
+def player_move(keys, x, y):
+    if keys[pygame.K_UP]:
+        y -= 5
+    if keys[pygame.K_DOWN]:
+        y += 5
+    if keys[pygame.K_LEFT]:
+        x -= 5
+    if keys[pygame.K_RIGHT]:
+        x += 5
     return x, y
 
 
@@ -42,14 +41,9 @@ while not crashed:
         if event.type == pygame.QUIT:
             crashed = True
 
-        # player movement
-        if event.type == pygame.KEYDOWN:
-            direction = event.key
-        if event.type == pygame.KEYUP:
-            if event.key == direction:
-                direction = None
-
-    x, y = player_move(direction, x, y)
+    # player movement
+    keys = pygame.key.get_pressed()
+    x, y = player_move(keys, x, y)
 
     # draw
     game_display.fill((255, 255, 255))
