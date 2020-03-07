@@ -97,7 +97,6 @@ def main():
             allsprites.add(potion)
             item_count[Potion] = item_count[Potion] + 1
 
-        print(chance_spawn(item_count[Enemy]))
         if random.random() < chance_spawn(item_count[Enemy]):
             enemy = Enemy(screen_height, screen_width)
             enemy_list.append(enemy)
