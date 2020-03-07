@@ -13,7 +13,6 @@ clock = pygame.time.Clock()
 crashed = False
 player_img = pygame.image.load('../art/player/player_default.png')
 
-
 def player(x, y):
     game_display.blit(player_img, (x, y))
 

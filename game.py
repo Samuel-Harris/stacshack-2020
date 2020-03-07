@@ -1,5 +1,6 @@
 # Import Modules
 import pygame as pg
+
 from player import Player
 
 
@@ -32,27 +33,33 @@ def main():
     # Prepare Game Objects
     clock = pg.time.Clock()
     player = Player()
-    all_sprites = pg.sprite.RenderPlain(player)
+    allsprites = pg.sprite.RenderPlain(player)
 
     # Main Loop
     going = True
     while going:
         clock.tick(60)
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                going = False
-            elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-                going = False
 
-        all_sprites.update()
+        # Handle Input Events
+        # for event in pg.event.get():
+        #     if event.type == pg.QUIT:
+        #         going = False
+        #     elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+        #         going = False
+        #     elif event.type == pg.MOUSEBUTTONDOWN:
+        #         if fist.punch(chimp):
+        #             punch_sound.play()  # punch
+        #             chimp.punched()
+        #         else:
+        #             whiff_sound.play()  # miss
+        #     elif event.type == pg.MOUSEBUTTONUP:
+        #         fist.unpunch()
+
+        allsprites.update()
 
         # Draw Everything
         screen.blit(background, (0, 0))
-        all_sprites.draw(screen)
+        allsprites.draw(screen)
         pg.display.flip()
 
     pg.quit()
-
-
-if __name__ == "__main__":
-    main()
