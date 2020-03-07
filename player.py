@@ -17,11 +17,7 @@ class Player(pg.sprite.Sprite):
         self.health = 5
         self.move = 9
         self.attack_cooldown = 0
-        self.attack_box = (self.rect.x + 10, self.rect.y + 10, 10, 10)
-
-    def calc_hitbox(self):
-        self.attack_box = (self.rect.x + 10, self.rect.y + 10, 10, 10)
-
+        self.attack_box = (self.rect.x, self.rect.y + 30, 30, 30)
         # for attack animation
         self.attack = False
         self.attack_frame = 0
@@ -30,8 +26,16 @@ class Player(pg.sprite.Sprite):
             filename = "art/player/attack_" + str(i) + ".png"
             self.attack_images.append(pg.image.load(filename))
 
+    def calc_hitbox(self):
+        self.attack_box = (self.rect.x + 25, self.rect.y, 50, 50)
+
+
+
     def update(self):
         self.handle_keys()
+        if self.attack_cooldown > 0:
+            self.attack_cooldown = self.attack_cooldown - 1
+            print(self.attack_cooldown)
         # check if attacking
         if self.attack:
             if self.attack_frame < 5:   # get attack frame; show attack + advance attack frame
@@ -59,19 +63,12 @@ class Player(pg.sprite.Sprite):
         self.rect.y += y
         self.calc_hitbox()
 
-        if keys[pg.K_SPACE]:
-            self.attack()
-
-
-    def attack(self):
-        if not self.attack_cooldown:
-            self.attack_cooldown = 10
-
 
     def start_attack(self):
-        if not self.attack:
+        if not self.attack and self.attack_cooldown == 0:
             self.attack = True
             self.attack_frame = 0
+            self.attack_cooldown = 100
 
     # def update(self):
     #     """walk or spin, depending on the monkeys state"""

@@ -58,11 +58,9 @@ def main():
         # Draw Everything
         screen.blit(background, (0, 0))
         allsprites.draw(screen)
-        pg.draw.rect(background, (255, 0, 0), player.attack_box, 2)
         pg.display.flip()
 
         clock.tick(60)
-        player.attack_cooldown -= 1
 
 
     pg.quit()
