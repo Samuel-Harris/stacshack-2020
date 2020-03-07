@@ -11,7 +11,7 @@ class Wall(pg.sprite.Sprite):
 
         # Make a blue wall, of the size specified in the parameters
         self.image = pg.Surface([width, height])
-        self.image.fill((0,0,0))
+        self.image.fill((0, 0, 0))
 
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()

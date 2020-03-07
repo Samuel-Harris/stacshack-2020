@@ -15,37 +15,54 @@ class Player(pg.sprite.Sprite):
         self.move = 9
         self.dizzy = 0
 
-    def update(self):
-        """walk or spin, depending on the monkeys state"""
-        if self.dizzy:
-            self._spin()
-        else:
-            self._walk()
+    def handle_keys(self):
+        """ Handles Keys """
+        key = pg.key.get_pressed()
+        dist = 5  # distance moved in 1 frame, try changing it to 5
+        x, y = 0, 0
+        keys = pg.key.get_pressed()
+        if keys[pg.K_UP]:
+            y -= dist
+        if keys[pg.K_DOWN]:
+            y += dist
+        if keys[pg.K_LEFT]:
+            x -= dist
+        if keys[pg.K_RIGHT]:
+            x += dist
+        self.rect.x += x
+        self.rect.y += y
 
-    def _walk(self):
-        """move the monkey across the screen, and turn at the ends"""
-        newpos = self.rect.move((self.move, 0))
-        if not self.area.contains(newpos):
-            if self.rect.left < self.area.left or self.rect.right > self.area.right:
-                self.move = -self.move
-                newpos = self.rect.move((self.move, 0))
-                self.image = pg.transform.flip(self.image, 1, 0)
-            self.rect = newpos
-
-    def _spin(self):
-        """spin the monkey image"""
-        center = self.rect.center
-        self.dizzy = self.dizzy + 12
-        if self.dizzy >= 360:
-            self.dizzy = 0
-            self.image = self.original
-        else:
-            rotate = pg.transform.rotate
-            self.image = rotate(self.original, self.dizzy)
-        self.rect = self.image.get_rect(center=center)
-
-    def punched(self):
-        """this will cause the monkey to start spinning"""
-        if not self.dizzy:
-            self.dizzy = 1
-            self.original = self.image
+    # def update(self):
+    #     """walk or spin, depending on the monkeys state"""
+    #     if self.dizzy:
+    #         self._spin()
+    #     else:
+    #         self._walk()
+    #
+    # def _walk(self):
+    #     """move the monkey across the screen, and turn at the ends"""
+    #     newpos = self.rect.move((self.move, 0))
+    #     if not self.area.contains(newpos):
+    #         if self.rect.left < self.area.left or self.rect.right > self.area.right:
+    #             self.move = -self.move
+    #             newpos = self.rect.move((self.move, 0))
+    #             self.image = pg.transform.flip(self.image, 1, 0)
+    #         self.rect = newpos
+    #
+    # def _spin(self):
+    #     """spin the monkey image"""
+    #     center = self.rect.center
+    #     self.dizzy = self.dizzy + 12
+    #     if self.dizzy >= 360:
+    #         self.dizzy = 0
+    #         self.image = self.original
+    #     else:
+    #         rotate = pg.transform.rotate
+    #         self.image = rotate(self.original, self.dizzy)
+    #     self.rect = self.image.get_rect(center=center)
+    #
+    # def punched(self):
+    #     """this will cause the monkey to start spinning"""
+    #     if not self.dizzy:
+    #         self.dizzy = 1
+    #         self.original = self.image
