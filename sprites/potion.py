@@ -6,7 +6,7 @@ from util.load import load_image
 
 class Potion(pg.sprite.Sprite):
     """HUD that has a health bar."""
-    def __init__(self):
+    def __init__(self, screen_width, screen_height):
         pg.sprite.Sprite.__init__(self)  # call Sprite intializer
         self.image, self.rect = load_image("powerup/potion1.png", -1)
 
@@ -15,7 +15,7 @@ class Potion(pg.sprite.Sprite):
 
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
-        self.rect.topleft = randint(0, 800), randint(0, 600)
+        self.rect.topleft = randint(10, screen_width-34), randint(10, screen_height-34)
 
     def update(self):
         if self.hitbox_debug:

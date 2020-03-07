@@ -22,7 +22,7 @@ class Enemy(pg.sprite.Sprite):
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.walls = None
-        self.rect.topleft = randint(0, 800), randint(0, 600)
+        self.rect.topleft = randint(0, screen_width - 80), randint(0, screen_height - 80)
         self.health = 1
         self.move = 9
 
