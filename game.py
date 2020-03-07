@@ -43,10 +43,20 @@ def main():
     clock = pg.time.Clock()
     player = Player(screen_width, screen_height)
     hud = HUD(player)
+    invisible_top_wall = Wall(0, -35, screen_width, 10)
+    invisible_bottom_wall = Wall(0, screen_height + 25, screen_width, 10)
+    invisible_left_wall = Wall(-35, 0, 10, screen_height)
+    invisible_right_wall = Wall(screen_width + 25, 0, 10, screen_height)
+    invisible_middle_wall = Wall(screen_width/2-15, screen_height/2-15, 30, 30)
     top_wall = Wall(0, 0, screen_width, 10)
-    walls = pg.sprite.RenderPlain(top_wall)
-    allsprites = pg.sprite.RenderPlain(player, walls, hud)
-    player.walls = walls.sprites()
+    bottom_wall = Wall(0, screen_height - 10, screen_width, 10)
+    left_wall = Wall(0, 0, 10, screen_height)
+    right_wall = Wall(screen_width-10, 0, 10, screen_height)
+    middle_wall = Wall(screen_width/2-50, screen_height/2-50, 100, 100)
+    walls = pg.sprite.RenderPlain(top_wall, bottom_wall, left_wall, right_wall, middle_wall)
+    collision_walls = pg.sprite.RenderPlain(invisible_top_wall, invisible_bottom_wall, invisible_left_wall, invisible_right_wall, invisible_middle_wall)
+    allsprites = pg.sprite.RenderPlain(player, walls, collision_walls, hud)
+    player.walls = collision_walls.sprites()
 
     # Tracker
     item_count = defaultdict(lambda: 0)
@@ -86,7 +96,6 @@ def main():
         clock.tick(60)
 
     pg.quit()
-
 
 if __name__ == '__main__':
     main()
