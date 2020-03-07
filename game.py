@@ -87,9 +87,6 @@ def main():
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 player.start_attack()
 
-            if event.type == pg.KEYDOWN and event.key == pg.K_0:  # TODO: Replace me with
-                player.health -= 1
-
         if random.random() < chance_spawn(item_count[Potion]):  # TODO: Replace me with actual logic!
             potion = Potion(screen_width, screen_height)
             potion_list.append(potion)
@@ -105,16 +102,17 @@ def main():
         # update player (movement, attack frame, health)
         player.update()
 
-        for enemy in enemy_list:
-            if player.attack and player.attack_box.colliderect(enemy.hurtbox):
-                enemy.kill_enemy(player)
-                enemy_list.remove(enemy)
-                item_count[Enemy] = item_count[Enemy] - 1
-                allsprites.remove(enemy)  # TODO: Make enemies stay a while before being removed
+        if clock.get_time() % 5:
+            for enemy in enemy_list:
+                if player.attack and player.attack_box.colliderect(enemy.hurtbox):
+                    enemy.kill_enemy(player)
+                    enemy_list.remove(enemy)
+                    item_count[Enemy] = item_count[Enemy] - 1
+                    allsprites.remove(enemy)  # TODO: Make enemies stay a while before being removed
 
-            if player.hurtbox.colliderect(enemy.hurtbox):
-                if player.damage_cooldown == 0:
-                    player.get_hurt()
+                if player.hurtbox.colliderect(enemy.hurtbox):
+                    if player.damage_cooldown == 0:
+                        player.get_hurt()
 
         # draw
         # screen.fill((255, 255, 255))

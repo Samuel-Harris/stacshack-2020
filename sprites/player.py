@@ -33,7 +33,7 @@ class Player(pg.sprite.Sprite):
 
         # attack data
         self.attack_cooldown = 0
-        self.attack_box = (self.rect.x, self.rect.y + 30, 30, 30)
+        self.attack_box = (self.rect.x - 20, self.rect.y + 20, 70, 90)
         # attack animation
         self.attack = False
         self.attack_frame = 0
@@ -79,7 +79,7 @@ class Player(pg.sprite.Sprite):
         self.damage_cooldown = 0
 
     def calc_hitboxes(self):
-        self.attack_box = pg.Rect(self.rect.x + 25, self.rect.y, 50, 50)
+        self.attack_box = pg.Rect(self.rect.x + 5, self.rect.y - 10, 90, 100)
         self.hurtbox = pg.Rect(self.rect.x + 35, self.rect.y + 35, 30, 30)
 
     def update(self):
