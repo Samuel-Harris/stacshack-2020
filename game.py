@@ -110,6 +110,7 @@ def main():
             if player.attack and player.attack_box.colliderect(enemy.hurtbox):
                 enemy.kill_enemy(player)
                 enemy_list.remove(enemy)
+                item_count[Enemy] = item_count[Enemy] - 1
                 allsprites.remove(enemy)  # TODO: Make enemies stay a while before being removed
 
             if player.hurtbox.colliderect(enemy.hurtbox):
