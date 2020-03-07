@@ -14,7 +14,7 @@ def main():
     screen_width = 800
     screen_height = 600
     screen = pg.display.set_mode((screen_width, screen_height))
-    pg.display.set_caption("Monkey Fever")
+    pg.display.set_caption("Bullet Hell Thing")
     pg.mouse.set_visible(0)
 
     # Create The Backgound
@@ -23,11 +23,6 @@ def main():
     background.fill((250, 250, 250))
 
     # Put Text On The Background, Centered
-    # if pg.font:
-    #     font = pg.font.Font(None, 36)
-    #     text = font.render("Pummel The Chimp, And Win $$$", 1, (10, 10, 10))
-    #     textpos = text.get_rect(centerx=background.get_width() / 2)
-    #     background.blit(text, textpos)
 
     # Display The Background
     screen.blit(background, (0, 0))
