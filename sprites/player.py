@@ -144,13 +144,13 @@ class Player(pg.sprite.Sprite):
 
         x_change = 0
         y_change = 0
-        if keys[pg.K_UP]:
+        if keys[pg.K_w]:
             y_change -= speed
-        if keys[pg.K_DOWN]:
+        if keys[pg.K_s]:
             y_change += speed
-        if keys[pg.K_LEFT]:
+        if keys[pg.K_a]:
             x_change -= speed
-        if keys[pg.K_RIGHT]:
+        if keys[pg.K_d]:
             x_change += speed
 
         if x_change != 0 and y_change != 0:
