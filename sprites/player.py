@@ -101,6 +101,11 @@ class Player(pg.sprite.Sprite):
         screen = pg.display.get_surface()
         pg.draw.rect(screen, (255, 0, 0), self.hurtbox, 2)
 
+        abox_color = (0, 0, 255)        # inactive attack
+        if self.attack:
+            abox_color = (255, 0, 0)    # active attack
+        pg.draw.rect(screen, abox_color, self.attack_box, 2)
+
     def handle_attack(self):
         """ Checks if attacking/on cooldown; continues/updates it as necessary"""
 
