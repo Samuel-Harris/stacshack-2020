@@ -1,6 +1,6 @@
 import pygame as pg
-from load import load_image
-from player import Player
+from util.load import load_image
+from sprites.player import Player
 
 
 class HUD(pg.sprite.Sprite):
