@@ -40,7 +40,7 @@ class Player(pg.sprite.Sprite):
 
     def calc_hitboxes(self):
         self.attack_box = (self.rect.x + 25, self.rect.y, 50, 50)
-        self.hurtbox = (self.rect.x, self.rect.y, 20, 20)
+        self.hurtbox = (self.rect.x + 40, self.rect.y + 40, 20, 20)
 
 
 
@@ -48,7 +48,6 @@ class Player(pg.sprite.Sprite):
         self.handle_keys()
         if self.attack_cooldown > 0:
             self.attack_cooldown = self.attack_cooldown - 1
-            print(self.attack_cooldown)
         # check if attacking
         if self.attack:
             if self.attack_frame < 5:   # get attack frame; show attack + advance attack frame
