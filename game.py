@@ -1,6 +1,8 @@
 # Import Modules
 import pygame as pg
+
 from player import Player
+from wall import Wall
 
 
 def main():
@@ -9,7 +11,9 @@ def main():
        a loop until the function returns."""
     # Initialize Everything
     pg.init()
-    screen = pg.display.set_mode((468, 60))
+    screen_width = 800
+    screen_height = 600
+    screen = pg.display.set_mode((screen_width, screen_height))
     pg.display.set_caption("Monkey Fever")
     pg.mouse.set_visible(0)
 
@@ -32,27 +36,50 @@ def main():
     # Prepare Game Objects
     clock = pg.time.Clock()
     player = Player()
-    all_sprites = pg.sprite.RenderPlain(player)
+    top_wall = Wall(0, 0, screen_width, 10)
+    allsprites = pg.sprite.RenderPlain(player)
 
     # Main Loop
     going = True
     while going:
-        clock.tick(60)
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                going = False
-            elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-                going = False
+                crashed = True
 
-        all_sprites.update()
+        # player movement
+        # keys = pg.key.get_pressed()
+        # x, y = player_move(keys, x, y)
+        player.handle_keys()
+
+        # draw
+        screen.fill((255, 255, 255))
+
+        allsprites.update()
+        pg.display.update()
 
         # Draw Everything
         screen.blit(background, (0, 0))
-        all_sprites.draw(screen)
+        allsprites.draw(screen)
         pg.display.flip()
+
+        clock.tick(60)
+
+        # Handle Input Events
+        # for event in pg.event.get():
+        #     if event.type == pg.QUIT:
+        #         going = False
+        #     elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+        #         going = False
+            # elif event.type == pg.MOUSEBUTTONDOWN:
+            #     if fist.punch(chimp):
+            #         punch_sound.play()  # punch
+            #         chimp.punched()
+            #     else:
+            #         whiff_sound.play()  # miss
+            # elif event.type == pg.MOUSEBUTTONUP:
+            #     fist.unpunch()
 
     pg.quit()
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
