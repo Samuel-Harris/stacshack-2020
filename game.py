@@ -70,16 +70,17 @@ def main():
         #         going = False
         #     elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
         #         going = False
-            # elif event.type == pg.MOUSEBUTTONDOWN:
-            #     if fist.punch(chimp):
-            #         punch_sound.play()  # punch
-            #         chimp.punched()
-            #     else:
-            #         whiff_sound.play()  # miss
-            # elif event.type == pg.MOUSEBUTTONUP:
-            #     fist.unpunch()
+        #     elif event.type == pg.MOUSEBUTTONDOWN:
+        #         if fist.punch(chimp):
+        #             punch_sound.play()  # punch
+        #             chimp.punched()
+        #     else:
+        #         whiff_sound.play()  # miss
+        #     elif event.type == pg.MOUSEBUTTONUP:
+        #         fist.unpunch()
 
     pg.quit()
+
 
 if __name__ == '__main__':
     main()
