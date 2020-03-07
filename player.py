@@ -35,7 +35,8 @@ class Player(pg.sprite.Sprite):
         for i in range(0, 5):
             filename = "art/player/attack_" + str(i) + ".png"
             self.attack_images.append(pg.image.load(filename))
-        # attack ready animation
+
+        # attack_ready animation
         self.attack_ready = False
         self.attack_ready_frame = 0
         self.attack_ready_images = []
@@ -43,14 +44,21 @@ class Player(pg.sprite.Sprite):
             filename = "art/player/ready_" + str(i) + ".png"
             self.attack_ready_images.append(pg.image.load(filename))
 
+        # attack_ready progress bar
+        self.attack_ready_bar = pg.Surface((10, 50))
+        for x in range(self.attack_ready_bar.get_width()):
+            for y in range(self.attack_ready_bar.get_height()):
+                self.attack_ready_bar.set_at((x, y), pg.Color(100, 100, 100))
+
+        # self.attack_ready_rect = self.attack_ready_bar.get_rect(topleft=(200, 100))
+
+
         # hurtbox data
         self.hurtbox = (self.rect.x, self.rect.y, 20, 20)
 
     def calc_hitboxes(self):
         self.attack_box = (self.rect.x + 25, self.rect.y, 50, 50)
         self.hurtbox = (self.rect.x + 40, self.rect.y + 40, 20, 20)
-
-
 
     def update(self):
         self.handle_keys()
@@ -83,6 +91,10 @@ class Player(pg.sprite.Sprite):
                 self.attack_ready = False
                 self.attack_ready_frame = 0
                 self.image = pg.image.load("art/player/player_default.png")
+
+        # handle progress bar for attack_ready
+        screen = pg.display.get_surface()
+        screen.blit(self.attack_ready_bar, (self.rect.x+80, self.rect.y+25), area=(0, 0, 10, self.attack_cooldown//2))
 
     def handle_keys(self):
         """ Handles Keys """

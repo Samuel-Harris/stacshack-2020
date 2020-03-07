@@ -48,6 +48,9 @@ def main():
     # Main Loop
     going = True
     while going:
+        # draw the background
+        screen.blit(background, (0, 0))
+
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 going = False
@@ -70,7 +73,6 @@ def main():
         allsprites.update()
 
         # Draw Everything
-        screen.blit(background, (0, 0))
         allsprites.draw(screen)
         pg.display.flip()
 
