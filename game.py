@@ -8,6 +8,7 @@ from sprites.hud import HUD
 from sprites.player import Player
 from sprites.potion import Potion
 from sprites.wall import Wall
+from sprites.enemy import Enemy
 from util.spawning import chance_spawn
 
 
@@ -57,6 +58,11 @@ def main():
     collision_walls = pg.sprite.RenderPlain(invisible_top_wall, invisible_bottom_wall, invisible_left_wall, invisible_right_wall, invisible_middle_wall)
     allsprites = pg.sprite.RenderPlain(player, walls, collision_walls, hud)
     player.walls = collision_walls.sprites()
+    enemy_list = []
+    enemy_list.append(Enemy(screen_width, screen_height))
+    for enemy in enemy_list:
+        allsprites.add(enemy)
+    player.walls = walls.sprites()
 
     # Tracker
     item_count = defaultdict(lambda: 0)
@@ -84,6 +90,10 @@ def main():
 
         # update player (movement, attack frame, health)
         player.update()
+
+        for enemy in enemy_list:
+            if player.attack and player.attack_box.colliderect(enemy.hurtbox):
+                enemy.kill_enemy(player)
 
         # draw
         # screen.fill((255, 255, 255))

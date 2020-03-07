@@ -23,6 +23,7 @@ class Player(pg.sprite.Sprite):
         self.walls = None
         self.health = 8    # there are 9 stages of health; starting from heart_0 to heart_8 (death)
         self.move = 9
+        self.score = 0
 
         # attack data
         self.attack_cooldown = 0
@@ -59,8 +60,8 @@ class Player(pg.sprite.Sprite):
         self.char_box.rect = pg.Rect(self.rect.x, self.rect.y, 30, 30)
 
     def calc_hitboxes(self):
-        self.attack_box = (self.rect.x + 25, self.rect.y, 50, 50)
-        self.hurtbox = (self.rect.x + 40, self.rect.y + 40, 30, 30)
+        self.attack_box = pg.Rect(self.rect.x + 25, self.rect.y, 50, 50)
+        self.hurtbox = pg.Rect(self.rect.x + 40, self.rect.y + 40, 30, 30)
         self.char_box.rect = pg.Rect(self.rect.x + 40, self.rect.y + 40, 30, 30)
 
     def update(self):
