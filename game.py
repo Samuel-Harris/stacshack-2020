@@ -44,7 +44,8 @@ def main():
 
     # Prepare Game Objects
     clock = pg.time.Clock()
-    player = Player(screen_width, screen_height)
+    potion_list = []
+    player = Player(screen_width, screen_height, potion_list)
     hud = HUD(player)
     invisible_top_wall = Wall(0, -35, screen_width, 10)
     invisible_bottom_wall = Wall(0, screen_height + 25, screen_width, 10)
@@ -92,7 +93,9 @@ def main():
                 player.health -= 1
 
         if random.random() < chance_spawn(item_count[Potion]):  # TODO: Replace me with actual logic!
-            allsprites.add(Potion())
+            potion = Potion()
+            potion_list.append(potion)
+            allsprites.add(potion)
             item_count[Potion] = item_count[Potion] + 1
 
         # update player (movement, attack frame, health)
