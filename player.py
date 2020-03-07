@@ -17,7 +17,6 @@ class Player(pg.sprite.Sprite):
 
     def handle_keys(self):
         """ Handles Keys """
-        key = pg.key.get_pressed()
         dist = 5  # distance moved in 1 frame, try changing it to 5
         x, y = 0, 0
         keys = pg.key.get_pressed()
