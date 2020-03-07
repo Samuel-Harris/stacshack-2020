@@ -1,7 +1,9 @@
 # Import Modules
 import pygame as pg
 
+from hud import HUD
 from player import Player
+from potion import Potion
 from wall import Wall
 
 
@@ -14,7 +16,7 @@ def main():
     screen_width = 800
     screen_height = 600
     screen = pg.display.set_mode((screen_width, screen_height))
-    pg.display.set_caption("Monkey Fever")
+    pg.display.set_caption("Bullet Hell Thing")
     pg.mouse.set_visible(0)
 
     # Create The Background
@@ -36,9 +38,10 @@ def main():
     # Prepare Game Objects
     clock = pg.time.Clock()
     player = Player(screen_width, screen_height)
+    hud = HUD(player)
     top_wall = Wall(0, 0, screen_width, 10)
     walls = pg.sprite.RenderPlain(top_wall)
-    allsprites = pg.sprite.RenderPlain(player, walls)
+    allsprites = pg.sprite.RenderPlain(player, walls, hud)
     player.walls = walls.sprites()
 
     # Main Loop
@@ -48,21 +51,24 @@ def main():
             if event.type == pg.QUIT:
                 going = False
 
+            # player attack
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 player.start_attack()
+
+        if random.choice([True, False]):  # 50% chance to spawn a random HP bottle. TODO: Replace me with actual logic!
+            allsprites.add(Potion())
 
         # player movement
         player.handle_keys()
 
 
         # draw
-        screen.fill((255, 255, 255))
-
+        # screen.fill((255, 255, 255))
         allsprites.update()
         pg.draw.rect(background, (255, 0, 0), player.hurtbox, 2)
 
         # Draw Everything
-        # screen.blit(background, (0, 0))
+        screen.blit(background, (0, 0))
         allsprites.draw(screen)
         pg.display.flip()
 
@@ -70,6 +76,7 @@ def main():
 
 
     pg.quit()
+
 
 if __name__ == '__main__':
     main()
