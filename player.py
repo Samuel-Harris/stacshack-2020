@@ -1,3 +1,5 @@
+import math
+
 import pygame as pg
 from load import load_image
 
@@ -8,6 +10,7 @@ class Player(pg.sprite.Sprite):
     def __init__(self):
         pg.sprite.Sprite.__init__(self)  # call Sprite intializer
         self.image, self.rect = load_image("player/player_default.png", -1)
+
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
         self.rect.topleft = 10, 10
@@ -19,9 +22,29 @@ class Player(pg.sprite.Sprite):
     def calc_hitbox(self):
         self.attack_box = (self.rect.x + 10, self.rect.y + 10, 10, 10)
 
+        # for attack animation
+        self.attack = False
+        self.attack_frame = 0
+        self.attack_images = []
+        for i in range(0, 5):
+            filename = "art/player/attack_" + str(i) + ".png"
+            self.attack_images.append(pg.image.load(filename))
+
+    def update(self):
+        self.handle_keys()
+        # check if attacking
+        if self.attack:
+            if self.attack_frame < 5:   # get attack frame; show attack + advance attack frame
+                self.image = self.attack_images[math.floor(self.attack_frame)]
+                self.attack_frame += 0.25
+            else:   # where attack_frame == 5, so end attack
+                self.attack = False
+                self.attack_frame = 0
+                self.image = pg.image.load("art/player/player_default.png")
+
     def handle_keys(self):
         """ Handles Keys """
-        dist = 5  # distance moved in 1 frame, try changing it to 5
+        dist = 3  # distance moved in 1 frame, try changing it to 5
         x, y = 0, 0
         keys = pg.key.get_pressed()
         if keys[pg.K_UP]:
@@ -44,6 +67,11 @@ class Player(pg.sprite.Sprite):
         if not self.attack_cooldown:
             self.attack_cooldown = 10
 
+
+    def start_attack(self):
+        if not self.attack:
+            self.attack = True
+            self.attack_frame = 0
 
     # def update(self):
     #     """walk or spin, depending on the monkeys state"""
