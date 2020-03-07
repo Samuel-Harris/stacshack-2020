@@ -1,6 +1,7 @@
 # Import Modules
 import pygame as pg
 
+from hud import HUD
 from player import Player
 from wall import Wall
 
@@ -9,6 +10,7 @@ def main():
     """this function is called when the program starts.
        it initializes everything it needs, then runs in
        a loop until the function returns."""
+
     # Initialize Everything
     pg.init()
     screen_width = 800
@@ -31,8 +33,9 @@ def main():
     # Prepare Game Objects
     clock = pg.time.Clock()
     player = Player()
+    hud = HUD()
     top_wall = Wall(0, 0, screen_width, 10)
-    allsprites = pg.sprite.RenderPlain(player)
+    allsprites = pg.sprite.RenderPlain((player, hud))
 
     # Main Loop
     going = True
@@ -43,7 +46,6 @@ def main():
 
         # player movement
         player.handle_keys()
-
 
         # draw
         screen.fill((255, 255, 255))

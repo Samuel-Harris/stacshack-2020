@@ -3,8 +3,7 @@ from load import load_image
 
 
 class Player(pg.sprite.Sprite):
-    """moves a monkey critter across the screen. it can spin the
-       monkey when it is punched."""
+    """The player model"""
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)  # call Sprite intializer
