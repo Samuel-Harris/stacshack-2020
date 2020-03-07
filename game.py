@@ -47,6 +47,7 @@ def main():
     potion_list = []
     player = Player(screen_width, screen_height, potion_list)
     hud = HUD(player)
+
     invisible_top_wall = Wall(0, -35, screen_width, 10)
     invisible_bottom_wall = Wall(0, screen_height + 25, screen_width, 10)
     invisible_left_wall = Wall(-35, 0, 10, screen_height)
