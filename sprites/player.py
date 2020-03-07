@@ -20,16 +20,15 @@ class Player(pg.sprite.Sprite):
         self.rect.y = 100
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
-        self.dist = 5       # movement speed
+        self.dist = 2
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.walls = None
-        self.health = 8    # there are 9 stages of health; starting from heart_0 to heart_8 (death)
-        self.move = 9
+        self.health = 8  # there are 9 stages of health; starting from heart_0 to heart_8 (death)
         self.score = 0
 
         self.scroll_background = False  # toggles automatic movement due to scrolling background; not working
-        self.bg_move = 1                # rate of movement; not a 1:1 ratio with background movement, for some reason
+        self.bg_move = 1  # rate of movement; not a 1:1 ratio with background movement, for some reason
 
         # attack data
         self.attack_cooldown = 0
@@ -108,15 +107,15 @@ class Player(pg.sprite.Sprite):
 
         if self.attack_cooldown > 0:
             self.attack_cooldown = self.attack_cooldown - 1
-            if self.attack_cooldown == 0:   # play the 'ready' animation upon cooldown decreasing to 0
+            if self.attack_cooldown == 0:  # play the 'ready' animation upon cooldown decreasing to 0
                 self.attack_ready = True
 
         # check if attacking
         if self.attack:
-            if self.attack_frame < 5:   # get attack frame; show attack + advance attack frame
+            if self.attack_frame < 5:  # get attack frame; show attack + advance attack frame
                 self.image = self.attack_images[math.floor(self.attack_frame)]
                 self.attack_frame += 0.25
-            else:   # where attack_frame == 5, so end attack
+            else:  # where attack_frame == 5, so end attack
                 self.attack = False
                 self.attack_frame = 0
                 self.image = pg.image.load("art/player/player_default.png")
@@ -132,7 +131,8 @@ class Player(pg.sprite.Sprite):
 
         # handle progress bar for attack_ready
         screen = pg.display.get_surface()
-        screen.blit(self.attack_ready_bar, (self.rect.x+80, self.rect.y+25), area=(0, 0, 10, self.attack_cooldown//2))
+        screen.blit(self.attack_ready_bar, (self.rect.x + 80, self.rect.y + 25),
+                    area=(0, 0, 10, self.attack_cooldown // 2))
 
     def handle_keys(self):
         """ Handles Keys for movement """
@@ -141,7 +141,7 @@ class Player(pg.sprite.Sprite):
             speed = self.dist // 2
         else:
             speed = self.dist
-        
+
         x_change = 0
         y_change = 0
         if keys[pg.K_UP]:
@@ -152,6 +152,17 @@ class Player(pg.sprite.Sprite):
             x_change -= speed
         if keys[pg.K_RIGHT]:
             x_change += speed
+
+        if x_change != 0 and y_change != 0:
+            if x_change < 0:
+                x_change = math.floor(x_change / 2 ** 0.5)
+            else:
+                x_change = math.ceil(x_change / 2 ** 0.5)
+
+            if y_change < 0:
+                y_change = math.floor(y_change / 2 ** 0.5)
+            else:
+                y_change = math.ceil(y_change / 2 ** 0.5)
 
         self.rect.x += x_change
 
