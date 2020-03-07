@@ -174,8 +174,6 @@ class Player(pg.sprite.Sprite):
         potion_hit_list = pg.sprite.spritecollide(self, self.potions, False)
         for potion in potion_hit_list:
             if self.hurtbox.colliderect(potion):
-                # If we are moving right, set our right side to the left side of
-                # the item we hit
                 potion.kill()
                 self.potions.remove(potion)
                 if self.health < 8:

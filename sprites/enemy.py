@@ -1,5 +1,8 @@
+from random import randint
+
 import pygame as pg
 from util.load import load_image
+
 
 class Enemy(pg.sprite.Sprite):
 
@@ -9,7 +12,6 @@ class Enemy(pg.sprite.Sprite):
 
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
-        self.rect.topleft = 0, 0
         self.radius = 15
         self.rect.x = screen_width / 2 - self.radius / 2
         self.rect.y = screen_height / 2 - self.radius / 2
@@ -17,7 +19,7 @@ class Enemy(pg.sprite.Sprite):
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.walls = None
-        self.rect.topleft = 10, 10
+        self.rect.topleft = randint(0, 800), randint(0, 600)
         self.health = 1
         self.move = 9
 
