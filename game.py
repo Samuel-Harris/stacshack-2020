@@ -1,8 +1,11 @@
 # Import Modules
+import random
+
 import pygame as pg
 
 from hud import HUD
 from player import Player
+from potion import Potion
 from wall import Wall
 
 
@@ -47,6 +50,9 @@ def main():
             # player attack
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 player.start_attack()
+
+        if random.choice([True, False]):  # 50% chance to spawn a random HP bottle. TODO: Replace me with actual logic!
+            allsprites.add(Potion())
 
         # player movement
         player.update()
