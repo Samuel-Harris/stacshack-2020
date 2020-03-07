@@ -53,6 +53,22 @@ class Player(pg.sprite.Sprite):
             for y in range(self.attack_ready_bar.get_height()):
                 self.attack_ready_bar.set_at((x, y), pg.Color(100, 100, 100))
 
+        # healing animation
+        self.heal = False
+        self.heal_frame = 0
+        self.heal_images = []
+        for i in range(0, 3):
+            filename = "art/player/heal_" + str(i) + ".png"
+            self.heal_images.append(pg.image.load(filename))
+
+        # damage animation
+        self.damage = False
+        self.damage_frame = 0
+        self.damage_images = []
+        for i in range(0, 3):
+            filename = "art/player/hurt_" + str(i) + ".png"
+            self.damage_images.append(pg.image.load(filename))
+
         # self.attack_ready_rect = self.attack_ready_bar.get_rect(topleft=(200, 100))
 
 
@@ -69,7 +85,7 @@ class Player(pg.sprite.Sprite):
 
     def update(self):
         self.handle_keys()
-        self.handle_health()
+        self.handle_damage()
         self.handle_attack()
 
         # movement due to scrolling background; doesn't work due to conflict with handle_keys
@@ -160,8 +176,26 @@ class Player(pg.sprite.Sprite):
             self.attack_frame = 0
             self.attack_cooldown = 100
 
-    def handle_health(self):
-        """ Handles sprite display depending on health """  # TODO: Remove? Health is part of HUD, not player
+    def handle_damage(self):
+        """ Handles sprite display upon recovering/healing damage """
+        # check for showing damage before healing
+        if self.damage:
+            if self.damage_frame < 3:
+                self.image = self.damage_images[math.floor(self.damage_frame)]
+                self.damage_frame += 0.5
+            else:  # where damage_frame == 3, so end attack_ready animation
+                self.damage = False
+                self.damage_frame = 0
+                self.image = pg.image.load("art/player/player_default.png")
+        elif self.heal:
+            if self.heal_frame < 3:
+                self.image = self.heal_images[math.floor(self.heal_frame)]
+                self.heal_frame += 0.5
+            else:  # where heal_frame == 3, so end attack_ready animation
+                self.heal = False
+                self.heal_frame = 0
+                self.image = pg.image.load("art/player/player_default.png")
+
         pass
 
     # def update(self):
