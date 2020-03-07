@@ -1,6 +1,7 @@
 # Import Modules
 import pygame as pg
 
+from hud import HUD
 from player import Player
 from wall import Wall
 
@@ -9,12 +10,13 @@ def main():
     """this function is called when the program starts.
        it initializes everything it needs, then runs in
        a loop until the function returns."""
+
     # Initialize Everything
     pg.init()
     screen_width = 800
     screen_height = 600
     screen = pg.display.set_mode((screen_width, screen_height))
-    pg.display.set_caption("Monkey Fever")
+    pg.display.set_caption("Bullet Hell Thing")
     pg.mouse.set_visible(0)
 
     # Create The Backgound
@@ -23,11 +25,6 @@ def main():
     background.fill((250, 250, 250))
 
     # Put Text On The Background, Centered
-    # if pg.font:
-    #     font = pg.font.Font(None, 36)
-    #     text = font.render("Pummel The Chimp, And Win $$$", 1, (10, 10, 10))
-    #     textpos = text.get_rect(centerx=background.get_width() / 2)
-    #     background.blit(text, textpos)
 
     # Display The Background
     screen.blit(background, (0, 0))
@@ -36,8 +33,9 @@ def main():
     # Prepare Game Objects
     clock = pg.time.Clock()
     player = Player()
+    hud = HUD(player)
     top_wall = Wall(0, 0, screen_width, 10)
-    allsprites = pg.sprite.RenderPlain(player)
+    allsprites = pg.sprite.RenderPlain((player, hud))
 
     # Main Loop
     going = True
@@ -52,7 +50,6 @@ def main():
 
         # player movement
         player.update()
-
 
         # draw
         screen.fill((255, 255, 255))
