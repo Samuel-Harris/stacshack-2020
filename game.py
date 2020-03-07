@@ -1,7 +1,6 @@
 # Import Modules
-import random
-
 import pygame as pg
+import random
 
 from hud import HUD
 from player import Player
@@ -21,7 +20,7 @@ def main():
     pg.display.set_caption("Bullet Hell Thing")
     pg.mouse.set_visible(0)
 
-    # Create The Backgound
+    # Create The Background
     background = pg.Surface(screen.get_size())
     background = background.convert()
     background.fill((250, 250, 250))
@@ -63,7 +62,7 @@ def main():
         if random.randint(0, 5) == 4:  # 2000% chance to spawn a random HP bottle. TODO: Replace me with actual logic!
             allsprites.add(Potion())
 
-        # player movement
+        # update player everything (movement, attack frame, health)
         player.update()
 
         # draw

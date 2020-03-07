@@ -22,9 +22,12 @@ class Player(pg.sprite.Sprite):
         self.screen_height = screen_height
         self.walls = None
         self.rect.topleft = 10, 10
-        self.health = 8
+        self.health = 8    # there are 9 stages of health; starting from heart_0 to heart_8 (death)
+        self.move = 9
 
-        # for attack animation
+        # attack data
+        self.attack_cooldown = 0
+        self.attack_box = (self.rect.x, self.rect.y + 30, 30, 30)
         self.attack = False
         self.attack_frame = 0
         self.attack_images = []
@@ -32,8 +35,25 @@ class Player(pg.sprite.Sprite):
             filename = "art/player/attack_" + str(i) + ".png"
             self.attack_images.append(pg.image.load(filename))
 
+        # hurtbox data
+        self.hurtbox = (self.rect.x, self.rect.y, 20, 20)
+
+    def calc_hitboxes(self):
+        self.attack_box = (self.rect.x + 25, self.rect.y, 50, 50)
+        self.hurtbox = (self.rect.x + 40, self.rect.y + 40, 20, 20)
+
+
+
     def update(self):
         self.handle_keys()
+        self.handle_health()
+        self.handle_attack()
+
+    def handle_attack(self):
+        """ Checks if attacking/on cooldown; continues/updates it as necessary"""
+
+        if self.attack_cooldown > 0:
+            self.attack_cooldown = self.attack_cooldown - 1
         # check if attacking
         if self.attack:
             if self.attack_frame < 5:   # get attack frame; show attack + advance attack frame
@@ -46,6 +66,8 @@ class Player(pg.sprite.Sprite):
 
     def handle_keys(self):
         """ Handles Keys """
+        dist = 3  # distance moved in 1 frame, try changing it to 5
+        x, y = 0, 0
         keys = pg.key.get_pressed()
         x_change = 0
         y_change = 0
@@ -86,10 +108,18 @@ class Player(pg.sprite.Sprite):
             else:
                 self.rect.top = block.rect.bottom
 
+        self.calc_hitboxes()
+
     def start_attack(self):
-        if not self.attack:
+        """ Starts an attack """
+        if not self.attack and self.attack_cooldown == 0:
             self.attack = True
             self.attack_frame = 0
+            self.attack_cooldown = 100
+
+    def handle_health(self):
+        """ Handles sprite display depending on health """
+        pass
 
     # def update(self):
     #     """walk or spin, depending on the monkeys state"""
