@@ -97,6 +97,12 @@ def main():
             allsprites.add(potion)
             item_count[Potion] = item_count[Potion] + 1
 
+        if random.random() < chance_spawn(item_count[Enemy]):
+            enemy = Enemy(screen_height, screen_width)
+            enemy_list.append(enemy)
+            allsprites.add(enemy)
+            item_count[Enemy] = item_count[Enemy] + 1
+
         # update player (movement, attack frame, health)
         player.update()
 
