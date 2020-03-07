@@ -44,8 +44,12 @@ def main():
             if event.type == pg.QUIT:
                 going = False
 
+            # player attack
+            if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
+                player.start_attack()
+
         # player movement
-        player.handle_keys()
+        player.update()
 
         # draw
         # screen.fill((255, 255, 255))
