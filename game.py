@@ -44,7 +44,7 @@ def main():
     while going:
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                crashed = True
+                going = False
 
         # player movement
         # keys = pg.key.get_pressed()
