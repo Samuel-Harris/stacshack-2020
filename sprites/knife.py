@@ -9,26 +9,31 @@ class Knife(pg.sprite.Sprite):
 
     def __init__(self, start_x, start_y, player_x, player_y):
         pg.sprite.Sprite.__init__(self)
-        self.image, self.rect = load_image("bullet/knife1.png", -1)
+        self.image, self.rect = load_image("bullet/knife1_thin.png", -1)
 
         # hitbox debug
         self.hitbox_debug = True
 
         self.rect.x = start_x
         self.rect.y = start_y
+        # 'true' coordinates to hold decimal coordinates
+        self.true_x = start_x * 1.0
+        self.true_y = start_y * 1.0
 
         # hitbox
         self.size_x = 10
         self.size_y = 10
-        self.offset_x = 10   # offset_x of 10 leads to centre x
-        self.offset_y = 20   # offset_y of 20 leads to centre y
+        self.offset_x = 3   # offset_x of 7.5 leads to centre x
+        self.offset_y = 25   # offset_y of 20 leads to centre y
         self.hurtbox = pg.Rect(self.rect.x, self.rect.y, 0, 0)
 
-        self.speed = 5
+        self.speed = 1
 
-        # aim towards player
+        # set movement + rotation towards player
         self.dx, self.dy, self.angle = self.face_to_player(start_x, start_y, player_x, player_y)
         self.image = pg.transform.rotate(self.image, self.angle)
+
+        # rotate hitbox - doesn't work
         # self.hurtbox = self.hurtbox(center=rect.center)
 
 
@@ -37,9 +42,14 @@ class Knife(pg.sprite.Sprite):
 
         if self.hitbox_debug:
             pg.draw.rect(screen, (0, 0, 255), self.hurtbox, 2)  # green to distinguish from others
+            pg.draw.rect(screen, (0, 0, 255), self.rect, 2)
 
-        self.rect.x += self.dx * self.speed
-        self.rect.y += self.dy * self.speed
+        # update true positions + reflect them in rect positions
+        self.true_x += self.dx * self.speed
+        self.true_y += self.dy * self.speed
+
+        self.rect.x = round(self.true_x)
+        self.rect.y = round(self.true_y)
         self.hurtbox = pg.Rect(self.rect.x+self.offset_x, self.rect.y+self.offset_y,
                                self.size_x, self.size_y)
 
@@ -57,8 +67,9 @@ class Knife(pg.sprite.Sprite):
 
         return dx, dy, angle
 
-    def rot_center(self, image, rect, angle):
+    def rotate_center(self, image, angle):
         """ Used to rotate an image while keeping its center """
+        center = image.get_rect().center
         rot_image = pg.transform.rotate(image, angle)   # angle degrees, anti-clockwise
         rot_rect = rot_image.get_rect(center=rect.center)
-        return rot_image, rot_rect
+        return rot_image
