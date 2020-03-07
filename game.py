@@ -25,9 +25,11 @@ def main():
     pg.mouse.set_visible(0)
 
     # Create The Background
-    background = pg.Surface(screen.get_size())
-    background = background.convert()
-    background.fill((250, 250, 250))
+    # background = pg.Surface(screen.get_size())
+    # background = background.convert()
+    # background.fill((250, 250, 250))
+    bg = pg.image.load("art/background/background.png")
+    bg_offset = 0
 
     # Put Text On The Background, Centered
     # if pg.font:
@@ -37,7 +39,7 @@ def main():
     #     background.blit(text, textpos)
 
     # Display The Background
-    screen.blit(background, (0, 0))
+    screen.blit(bg, (0, 0))
     # pg.display.flip()
 
     # Prepare Game Objects
@@ -70,8 +72,13 @@ def main():
     # Main Loop
     going = True
     while going:
-        # draw the background
-        screen.blit(background, (0, 0))
+        # draw two backgrounds, slowly moving down
+        screen.blit(bg, (0, bg_offset))
+        screen.blit(bg, (0, bg_offset - screen_height))
+        if bg_offset < screen_height:
+            bg_offset += 1
+        else:   # once offset goes off the screen, reset it
+            bg_offset = 0
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -106,6 +113,7 @@ def main():
         clock.tick(60)
 
     pg.quit()
+
 
 if __name__ == '__main__':
     main()
