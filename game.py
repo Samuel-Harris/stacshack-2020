@@ -59,9 +59,8 @@ def main():
         if random.choice([True, False]):  # 50% chance to spawn a random HP bottle. TODO: Replace me with actual logic!
             allsprites.add(Potion())
 
-        # player movement
-        player.handle_keys()
-
+        # update player everything (movement, attack frame, health)
+        player.update()
 
         # draw
         # screen.fill((255, 255, 255))
@@ -73,7 +72,6 @@ def main():
         pg.display.flip()
 
         clock.tick(60)
-
 
     pg.quit()
 

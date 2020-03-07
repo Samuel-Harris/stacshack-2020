@@ -22,7 +22,7 @@ class Player(pg.sprite.Sprite):
         self.screen_height = screen_height
         self.walls = None
         self.rect.topleft = 10, 10
-        self.health = 5
+        self.health = 8    # there are 9 stages of health; starting from heart_0 to heart_8 (death)
         self.move = 9
 
         # attack data
@@ -46,6 +46,12 @@ class Player(pg.sprite.Sprite):
 
     def update(self):
         self.handle_keys()
+        self.handle_health()
+        self.handle_attack()
+
+    def handle_attack(self):
+        """ Checks if attacking/on cooldown; continues/updates it as necessary"""
+
         if self.attack_cooldown > 0:
             self.attack_cooldown = self.attack_cooldown - 1
         # check if attacking
@@ -105,10 +111,15 @@ class Player(pg.sprite.Sprite):
         self.calc_hitboxes()
 
     def start_attack(self):
+        """ Starts an attack """
         if not self.attack and self.attack_cooldown == 0:
             self.attack = True
             self.attack_frame = 0
             self.attack_cooldown = 100
+
+    def handle_health(self):
+        """ Handles sprite display depending on health """
+        pass
 
     # def update(self):
     #     """walk or spin, depending on the monkeys state"""
