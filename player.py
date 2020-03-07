@@ -11,8 +11,7 @@ class Player(pg.sprite.Sprite):
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
         self.rect.topleft = 10, 10
-        self.move = 9
-        self.dizzy = 0
+        self.health = 5
 
     def handle_keys(self):
         """ Handles Keys """
