@@ -1,5 +1,6 @@
 # Import Modules
 import pygame as pg
+import random
 
 from hud import HUD
 from player import Player
