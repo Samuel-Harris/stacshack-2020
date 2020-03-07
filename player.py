@@ -78,7 +78,7 @@ class Player(pg.sprite.Sprite):
         elif self.attack_ready:
             if self.attack_ready_frame < 3:
                 self.image = self.attack_ready_images[math.floor(self.attack_ready_frame)]
-                self.attack_ready_frame += 0.25
+                self.attack_ready_frame += 0.5
             else:  # where attack_ready_frame == 3, so end attack_ready animation
                 self.attack_ready = False
                 self.attack_ready_frame = 0
