@@ -33,7 +33,7 @@ def main():
     # Prepare Game Objects
     clock = pg.time.Clock()
     player = Player()
-    hud = HUD()
+    hud = HUD(player)
     top_wall = Wall(0, 0, screen_width, 10)
     allsprites = pg.sprite.RenderPlain((player, hud))
 
