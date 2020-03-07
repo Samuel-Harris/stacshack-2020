@@ -3,7 +3,7 @@ import pygame as pg
 from pygame.compat import geterror
 
 main_dir = os.path.split(os.path.abspath(__file__))[0]
-data_dir = os.path.join(main_dir, "art")
+data_dir = os.path.join(main_dir, "../art")
 
 
 # functions to create our resources
