@@ -9,7 +9,7 @@ class HUD(pg.sprite.Sprite):
         self.player = player  # Hook a player into the HUD
 
         pg.sprite.Sprite.__init__(self)  # call Sprite intializer
-        self.image, self.rect = load_image("player/heart.png", -1)  # TODO: Add multiple hearts
+        self.image, self.rect = load_image("player/heart_0.png", -1)  # TODO: Add multiple hearts
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
         self.rect.topleft = 500, 500
