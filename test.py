@@ -11,18 +11,18 @@ pygame.display.set_caption('test game')
 clock = pygame.time.Clock()
 
 crashed = False
-fish_img = pygame.image.load('fish.jfif')
+player_img = pygame.image.load('art/player/player_default.png')
 
 
-def fish(x, y):
-    game_display.blit(fish_img, (x, y))
+def player(x, y):
+    game_display.blit(player_img, (x, y))
 
 
 x = (display_width * 0.25)
 y = (display_height * 0.2)
 x_change = 0
 y_change = 0
-fish_speed = 0
+player_speed = 0
 
 while not crashed:
     for event in pygame.event.get():
@@ -49,7 +49,7 @@ while not crashed:
     y += y_change
 
     game_display.fill((255, 255, 255))
-    fish(x, y)
+    player(x, y)
 
     pygame.display.update()
     clock.tick(60)
