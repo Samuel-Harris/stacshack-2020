@@ -28,12 +28,20 @@ class Player(pg.sprite.Sprite):
         # attack data
         self.attack_cooldown = 0
         self.attack_box = (self.rect.x, self.rect.y + 30, 30, 30)
+        # attack animation
         self.attack = False
         self.attack_frame = 0
         self.attack_images = []
         for i in range(0, 5):
             filename = "art/player/attack_" + str(i) + ".png"
             self.attack_images.append(pg.image.load(filename))
+        # attack ready animation
+        self.attack_ready = False
+        self.attack_ready_frame = 0
+        self.attack_ready_images = []
+        for i in range(0, 3):
+            filename = "art/player/ready_" + str(i) + ".png"
+            self.attack_ready_images.append(pg.image.load(filename))
 
         # hurtbox data
         self.hurtbox = (self.rect.x, self.rect.y, 20, 20)
@@ -54,6 +62,9 @@ class Player(pg.sprite.Sprite):
 
         if self.attack_cooldown > 0:
             self.attack_cooldown = self.attack_cooldown - 1
+            if self.attack_cooldown == 0:   # play the 'ready' animation upon cooldown decreasing to 0
+                self.attack_ready = True
+
         # check if attacking
         if self.attack:
             if self.attack_frame < 5:   # get attack frame; show attack + advance attack frame
@@ -62,6 +73,15 @@ class Player(pg.sprite.Sprite):
             else:   # where attack_frame == 5, so end attack
                 self.attack = False
                 self.attack_frame = 0
+                self.image = pg.image.load("art/player/player_default.png")
+        # if not attacking, check if ready
+        elif self.attack_ready:
+            if self.attack_ready_frame < 3:
+                self.image = self.attack_ready_images[math.floor(self.attack_ready_frame)]
+                self.attack_ready_frame += 0.25
+            else:  # where attack_ready_frame == 3, so end attack_ready animation
+                self.attack_ready = False
+                self.attack_ready_frame = 0
                 self.image = pg.image.load("art/player/player_default.png")
 
     def handle_keys(self):
@@ -118,7 +138,7 @@ class Player(pg.sprite.Sprite):
             self.attack_cooldown = 100
 
     def handle_health(self):
-        """ Handles sprite display depending on health """
+        """ Handles sprite display depending on health """  # TODO: Remove? Health is part of HUD, not player
         pass
 
     # def update(self):
