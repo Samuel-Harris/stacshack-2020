@@ -13,7 +13,6 @@ def main():
     """this function is called when the program starts.
        it initializes everything it needs, then runs in
        a loop until the function returns."""
-
     # Initialize Everything
     pg.init()
     screen_width = 800
@@ -28,6 +27,11 @@ def main():
     background.fill((250, 250, 250))
 
     # Put Text On The Background, Centered
+    # if pg.font:
+    #     font = pg.font.Font(None, 36)
+    #     text = font.render("Pummel The Chimp, And Win $$$", 1, (10, 10, 10))
+    #     textpos = text.get_rect(centerx=background.get_width() / 2)
+    #     background.blit(text, textpos)
 
     # Display The Background
     screen.blit(background, (0, 0))
@@ -35,10 +39,12 @@ def main():
 
     # Prepare Game Objects
     clock = pg.time.Clock()
-    player = Player()
+    player = Player(screen_width, screen_height)
     hud = HUD(player)
     top_wall = Wall(0, 0, screen_width, 10)
-    allsprites = pg.sprite.RenderPlain((player, hud))
+    walls = pg.sprite.RenderPlain(top_wall)
+    allsprites = pg.sprite.RenderPlain(player, walls, hud)
+    player.walls = walls.sprites()
 
     # Main Loop
     going = True
