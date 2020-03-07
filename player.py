@@ -7,12 +7,20 @@ from load import load_image
 class Player(pg.sprite.Sprite):
     """The player model"""
 
-    def __init__(self):
+    def __init__(self, screen_width, screen_height):
         pg.sprite.Sprite.__init__(self)  # call Sprite intializer
         self.image, self.rect = load_image("player/player_default.png", -1)
 
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
+        self.rect.topleft = 0, 0
+        self.radius = 15
+        self.rect.x = screen_width / 2 - self.radius / 2
+        self.rect.y = screen_height / 2 - self.radius / 2
+        self.dist = 5
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.walls = None
         self.rect.topleft = 10, 10
         self.health = 5
         self.move = 9
@@ -51,18 +59,44 @@ class Player(pg.sprite.Sprite):
         dist = 3  # distance moved in 1 frame, try changing it to 5
         x, y = 0, 0
         keys = pg.key.get_pressed()
+        x_change = 0
+        y_change = 0
         if keys[pg.K_UP]:
-            y -= dist
+            y_change -= self.dist
         if keys[pg.K_DOWN]:
-            y += dist
+            y_change += self.dist
         if keys[pg.K_LEFT]:
-            x -= dist
+            x_change -= self.dist
         if keys[pg.K_RIGHT]:
-            x += dist
-        self.rect.x += x
-        self.rect.y += y
-        self.calc_hitbox()
+            x_change += self.dist
+        # self.rect.x += x_change
+        # self.rect.y += y_change
 
+        self.rect.x += x_change
+
+        # Did this update cause us to hit a wall?
+        block_hit_list = pg.sprite.spritecollide(self, self.walls, False)
+        for block in block_hit_list:
+            # If we are moving right, set our right side to the left side of
+            # the item we hit
+            if x_change > 0:
+                self.rect.right = block.rect.left
+            else:
+                # Otherwise if we are moving left, do the opposite.
+                self.rect.left = block.rect.right
+
+        # Move up/down
+        self.rect.y += y_change
+
+        # Check and see if we hit anything
+        block_hit_list = pg.sprite.spritecollide(self, self.walls, False)
+        for block in block_hit_list:
+
+            # Reset our position based on the top/bottom of the object.
+            if y_change > 0:
+                self.rect.bottom = block.rect.top
+            else:
+                self.rect.top = block.rect.bottom
 
     def start_attack(self):
         if not self.attack and self.attack_cooldown == 0:
