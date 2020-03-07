@@ -105,6 +105,10 @@ def main():
             if player.attack and player.attack_box.colliderect(enemy.hurtbox):
                 enemy.kill_enemy(player)
 
+            if player.hurtbox.colliderect(enemy.hurtbox):
+                if player.damage_cooldown == 0:
+                    player.take_damage()
+
         # draw
         # screen.fill((255, 255, 255))
         allsprites.update()
