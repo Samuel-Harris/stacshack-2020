@@ -1,3 +1,5 @@
+from random import randint
+
 import pygame as pg
 from util.load import load_image
 

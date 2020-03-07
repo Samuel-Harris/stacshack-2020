@@ -56,7 +56,8 @@ def main():
     left_wall = Wall(0, 0, 10, screen_height)
     right_wall = Wall(screen_width-10, 0, 10, screen_height)
     walls = pg.sprite.RenderPlain(top_wall, bottom_wall, left_wall, right_wall)
-    collision_walls = pg.sprite.RenderPlain(invisible_top_wall, invisible_bottom_wall, invisible_left_wall, invisible_right_wall)
+    collision_walls = pg.sprite.RenderPlain(invisible_top_wall, invisible_bottom_wall, invisible_left_wall,
+                                            invisible_right_wall)
     allsprites = pg.sprite.RenderPlain(player, walls, collision_walls, hud)
     player.walls = collision_walls.sprites()
     enemy_list = []

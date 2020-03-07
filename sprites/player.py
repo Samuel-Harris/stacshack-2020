@@ -78,7 +78,6 @@ class Player(pg.sprite.Sprite):
         self.hurtbox = pg.Rect(self.rect.x + 30, self.rect.y + 30, 30, 30)
         self.damage_cooldown = 0
 
-
     def calc_hitboxes(self):
         self.attack_box = pg.Rect(self.rect.x + 25, self.rect.y, 50, 50)
         self.hurtbox = pg.Rect(self.rect.x + 35, self.rect.y + 35, 30, 30)
@@ -98,9 +97,9 @@ class Player(pg.sprite.Sprite):
         screen = pg.display.get_surface()
         pg.draw.rect(screen, (255, 0, 0), self.hurtbox, 2)
 
-        abox_color = (0, 0, 255)        # inactive attack
+        abox_color = (0, 0, 255)  # inactive attack
         if self.attack:
-            abox_color = (255, 0, 0)    # active attack
+            abox_color = (255, 0, 0)  # active attack
         pg.draw.rect(screen, abox_color, self.attack_box, 2)
 
     def handle_attack(self):
