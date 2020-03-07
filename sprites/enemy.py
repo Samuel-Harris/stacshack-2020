@@ -7,6 +7,9 @@ from util.load import load_image
 class Enemy(pg.sprite.Sprite):
 
     def __init__(self, screen_width, screen_height):
+        # hitbox debug
+        self.hitbox_debug = True
+
         pg.sprite.Sprite.__init__(self)
         self.image, self.rect = load_image("enemy/enemy1_big.png", -1)
 
@@ -33,3 +36,8 @@ class Enemy(pg.sprite.Sprite):
         topleft = self.rect.topleft
         self.image, self.rect = load_image("enemy/enemy1x_big.png", -1)
         self.rect.topleft = topleft
+
+    def update(self):
+        if self.hitbox_debug:
+            screen = pg.display.get_surface()
+            pg.draw.rect(screen, (255, 0, 0), self.hurtbox, 2)
