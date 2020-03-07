@@ -25,6 +25,9 @@ class Player(pg.sprite.Sprite):
         self.move = 9
         self.score = 0
 
+        self.scroll_background = False  # toggles automatic movement due to scrolling background; not working
+        self.bg_move = 1                # rate of movement; not a 1:1 ratio with background movement, for some reason
+
         # attack data
         self.attack_cooldown = 0
         self.attack_box = (self.rect.x, self.rect.y + 30, 30, 30)
@@ -69,6 +72,10 @@ class Player(pg.sprite.Sprite):
         self.handle_health()
         self.handle_attack()
 
+        # movement due to scrolling background; doesn't work due to conflict with handle_keys
+        if self.scroll_background:
+            self.rect.y += self.bg_move
+
     def handle_attack(self):
         """ Checks if attacking/on cooldown; continues/updates it as necessary"""
 
@@ -101,7 +108,7 @@ class Player(pg.sprite.Sprite):
         screen.blit(self.attack_ready_bar, (self.rect.x+80, self.rect.y+25), area=(0, 0, 10, self.attack_cooldown//2))
 
     def handle_keys(self):
-        """ Handles Keys """
+        """ Handles Keys for movement """
         dist = 3  # distance moved in 1 frame, try changing it to 5
         x, y = 0, 0
         keys = pg.key.get_pressed()
