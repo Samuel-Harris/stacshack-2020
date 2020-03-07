@@ -8,6 +8,9 @@ class Player(pg.sprite.Sprite):
     """The player model"""
 
     def __init__(self, screen_width, screen_height, potion_list):
+        # for showing hitboxes
+        self.hitbox_debug = True
+
         self.sprite_img_radius = 50
         self.sprite_char_radius = 15
         self.hitbox_radius = 10
@@ -71,9 +74,6 @@ class Player(pg.sprite.Sprite):
             filename = "art/player/hurt_" + str(i) + ".png"
             self.damage_images.append(pg.image.load(filename))
 
-        # self.attack_ready_rect = self.attack_ready_bar.get_rect(topleft=(200, 100))
-
-
         # hurtbox data
         self.hurtbox = pg.Rect(self.rect.x + 40, self.rect.y + 40, 30, 30)
         self.damage_cooldown = 0
@@ -90,10 +90,16 @@ class Player(pg.sprite.Sprite):
         self.handle_keys()
         self.handle_damage()
         self.handle_attack()
+        if self.hitbox_debug:
+            self.handle_hitbox_debug()
 
         # movement due to scrolling background; doesn't work due to conflict with handle_keys
         if self.scroll_background:
             self.rect.y += self.bg_move
+
+    def handle_hitbox_debug(self):
+        screen = pg.display.get_surface()
+        pg.draw.rect(screen, (255, 0, 0), self.hurtbox, 2)
 
     def handle_attack(self):
         """ Checks if attacking/on cooldown; continues/updates it as necessary"""
