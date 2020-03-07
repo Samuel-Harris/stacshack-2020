@@ -20,7 +20,7 @@ class Player(pg.sprite.Sprite):
         self.rect.y = 100
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
-        self.dist = 5
+        self.dist = 5       # movement speed
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.walls = None
@@ -134,21 +134,22 @@ class Player(pg.sprite.Sprite):
 
     def handle_keys(self):
         """ Handles Keys for movement """
-        dist = 3  # distance moved in 1 frame, try changing it to 5
-        x, y = 0, 0
         keys = pg.key.get_pressed()
+        if keys[pg.KMOD_SHIFT]:
+            speed = self.dist // 2
+        else:
+            speed = self.dist
+        
         x_change = 0
         y_change = 0
         if keys[pg.K_UP]:
-            y_change -= self.dist
+            y_change -= speed
         if keys[pg.K_DOWN]:
-            y_change += self.dist
+            y_change += speed
         if keys[pg.K_LEFT]:
-            x_change -= self.dist
+            x_change -= speed
         if keys[pg.K_RIGHT]:
-            x_change += self.dist
-        # self.rect.x += x_change
-        # self.rect.y += y_change
+            x_change += speed
 
         self.rect.x += x_change
 
@@ -229,10 +230,6 @@ class Player(pg.sprite.Sprite):
                 self.damage = False
                 self.damage_frame = 0
                 self.image = pg.image.load("art/player/player_default.png")
-
-
-        pass
-
 
     # def update(self):
     #     """walk or spin, depending on the monkeys state"""
