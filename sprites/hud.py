@@ -14,7 +14,7 @@ class HUD(pg.sprite.Sprite):
         self.image = self.hearts[0]
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
-        self.rect.topleft = 500, 500 # TODO: Make sure health bar is always on the bottom
+        self.rect.topleft = 700, 500
 
     def _update_hearts_display(self):
         if self.player.health < 0:

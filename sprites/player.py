@@ -8,20 +8,19 @@ class Player(pg.sprite.Sprite):
     """The player model"""
 
     def __init__(self, screen_width, screen_height):
+        self.sprite_img_radius = 50
+        self.sprite_char_radius = 15
+        self.hitbox_radius = 10
         pg.sprite.Sprite.__init__(self)  # call Sprite intializer
         self.image, self.rect = load_image("player/player_default.png", -1)
-
+        self.rect.x = 100
+        self.rect.y = 100
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
-        self.rect.topleft = 0, 0
-        self.radius = 15
-        self.rect.x = screen_width / 2 - self.radius / 2
-        self.rect.y = screen_height / 2 - self.radius / 2
         self.dist = 5
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.walls = None
-        self.rect.topleft = 10, 10
         self.health = 8    # there are 9 stages of health; starting from heart_0 to heart_8 (death)
         self.move = 9
 
@@ -56,9 +55,13 @@ class Player(pg.sprite.Sprite):
         # hurtbox data
         self.hurtbox = (self.rect.x, self.rect.y, 20, 20)
 
+        self.char_box = pg.sprite.Sprite()
+        self.char_box.rect = pg.Rect(self.rect.x, self.rect.y, 30, 30)
+
     def calc_hitboxes(self):
         self.attack_box = (self.rect.x + 25, self.rect.y, 50, 50)
-        self.hurtbox = (self.rect.x + 40, self.rect.y + 40, 20, 20)
+        self.hurtbox = (self.rect.x + 40, self.rect.y + 40, 30, 30)
+        self.char_box.rect = pg.Rect(self.rect.x + 40, self.rect.y + 40, 30, 30)
 
     def update(self):
         self.handle_keys()
