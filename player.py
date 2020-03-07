@@ -24,9 +24,10 @@ class Player(pg.sprite.Sprite):
         self.rect.topleft = 10, 10
         self.health = 5
         self.move = 9
+
+        # attack data
         self.attack_cooldown = 0
         self.attack_box = (self.rect.x, self.rect.y + 30, 30, 30)
-        # for attack animation
         self.attack = False
         self.attack_frame = 0
         self.attack_images = []
@@ -34,8 +35,12 @@ class Player(pg.sprite.Sprite):
             filename = "art/player/attack_" + str(i) + ".png"
             self.attack_images.append(pg.image.load(filename))
 
-    def calc_hitbox(self):
+        # hurtbox data
+        self.hurtbox = (self.rect.x, self.rect.y, 20, 20)
+
+    def calc_hitboxes(self):
         self.attack_box = (self.rect.x + 25, self.rect.y, 50, 50)
+        self.hurtbox = (self.rect.x, self.rect.y, 20, 20)
 
 
 
@@ -97,6 +102,8 @@ class Player(pg.sprite.Sprite):
                 self.rect.bottom = block.rect.top
             else:
                 self.rect.top = block.rect.bottom
+
+        self.calc_hitboxes()
 
     def start_attack(self):
         if not self.attack and self.attack_cooldown == 0:
