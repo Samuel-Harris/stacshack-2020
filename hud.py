@@ -9,13 +9,17 @@ class HUD(pg.sprite.Sprite):
         self.player = player  # Hook a player into the HUD
 
         pg.sprite.Sprite.__init__(self)  # call Sprite intializer
-        self.image, self.rect = load_image("player/heart_0.png", -1)  # TODO: Add multiple hearts
+        self.rect = load_image("player/heart_0.png", -1)[1]  # TODO: Add multiple hearts
+        self.hearts = [load_image(f"player/heart_{n}.png", -1)[0] for n in range(0, 9)]
+        self.image = self.hearts[0]
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
         self.rect.topleft = 500, 500
 
     def _update_hearts_display(self):
-        pass
+        if self.player.health < 0:
+            self.player.health = 8  # TODO: Add death mechanics
+        self.image = self.hearts[8 - self.player.health]
 
     def update(self):
         self._update_hearts_display()

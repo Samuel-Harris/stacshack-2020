@@ -57,7 +57,10 @@ def main():
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 player.start_attack()
 
-        if random.choice([True, False]):  # 50% chance to spawn a random HP bottle. TODO: Replace me with actual logic!
+            if event.type == pg.KEYDOWN and event.key == pg.K_0:  # TODO: Replace me with
+                player.health -= 1
+
+        if random.randint(0, 5) == 4:  # 2000% chance to spawn a random HP bottle. TODO: Replace me with actual logic!
             allsprites.add(Potion())
 
         # player movement

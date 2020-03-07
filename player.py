@@ -22,7 +22,7 @@ class Player(pg.sprite.Sprite):
         self.screen_height = screen_height
         self.walls = None
         self.rect.topleft = 10, 10
-        self.health = 5
+        self.health = 8
 
         # for attack animation
         self.attack = False
