@@ -125,10 +125,10 @@ def main():
 
             for bullet in bullet_list:
                 remove = False
-                # hit by player attack
-                if player.attack and player.attack_box.colliderect(bullet.hurtbox):
+                # bigger hitbox collides with player attack
+                if player.attack and player.attack_box.colliderect(bullet.rect):
                     remove = True
-                # hits player
+                # smaller hitbox collides with player
                 elif player.hurtbox.colliderect(bullet.hurtbox):
                     if player.damage_cooldown == 0:
                         player.get_hurt()

@@ -9,7 +9,7 @@ class Knife(pg.sprite.Sprite):
 
     def __init__(self, start_x, start_y, player_x, player_y):
         pg.sprite.Sprite.__init__(self)
-        self.image, self.rect = load_image("bullet/knife1_thin.png", -1)
+        self.image, self.rect = load_image("bullet/knife1.png", -1)
 
         # hitbox debug
         self.hitbox_debug = True
@@ -21,21 +21,24 @@ class Knife(pg.sprite.Sprite):
         self.true_y = start_y * 1.0
 
         # hitbox
-        self.size_x = 10
-        self.size_y = 10
-        self.offset_x = 3   # offset_x of 7.5 leads to centre x
-        self.offset_y = 25   # offset_y of 20 leads to centre y
+        self.size_x = 8
+        self.size_y = 8
+        self.offset_x = 20 - self.size_x/2   # offset_x of 20 leads to centre x
+        self.offset_y = 20 - self.size_y/2    # offset_y of 20 leads to centre y
         self.hurtbox = pg.Rect(self.rect.x, self.rect.y, 0, 0)
 
         self.speed = 1
 
         # set movement + rotation towards player
         self.dx, self.dy, self.angle = self.face_to_player(start_x, start_y, player_x, player_y)
-        self.image = pg.transform.rotate(self.image, self.angle)
+        self.image = self.rot_center_sq(self.image, self.angle)
 
         # rotate hitbox - doesn't work
         # self.hurtbox = self.hurtbox(center=rect.center)
 
+        # move knife a little bit away from Enemy sprite before appearing
+        self.true_x += self.dx * 5
+        self.true_y += self.dy * 5
 
     def update(self):
         screen = pg.display.get_surface()
@@ -67,9 +70,19 @@ class Knife(pg.sprite.Sprite):
 
         return dx, dy, angle
 
-    def rotate_center(self, image, angle):
-        """ Used to rotate an image while keeping its center """
-        center = image.get_rect().center
-        rot_image = pg.transform.rotate(image, angle)   # angle degrees, anti-clockwise
+    @staticmethod
+    def rot_center(image, rect, angle):
+        """ rotate an image while keeping its center """
+        rot_image = pg.transform.rotate(image, angle)
         rot_rect = rot_image.get_rect(center=rect.center)
+        return rot_image, rot_rect
+
+    @staticmethod
+    def rot_center_sq(image, angle):
+        """ rotate a SQUARE image while keeping its center and size """
+        orig_rect = image.get_rect()
+        rot_image = pg.transform.rotate(image, angle)
+        rot_rect = orig_rect.copy()
+        rot_rect.center = rot_image.get_rect().center
+        rot_image = rot_image.subsurface(rot_rect).copy()
         return rot_image
