@@ -76,6 +76,7 @@ class Player(pg.sprite.Sprite):
 
         # hurtbox data
         self.hurtbox = pg.Rect(self.rect.x + 40, self.rect.y + 40, 30, 30)
+        self.damage_cooldown = 0
 
         self.char_box = pg.sprite.Sprite()
         self.char_box.rect = pg.Rect(self.rect.x, self.rect.y, 30, 30)
@@ -179,7 +180,6 @@ class Player(pg.sprite.Sprite):
                 self.potions.remove(potion)
                 if self.health < 8:
                     self.health += 1
-                print("health found")
 
         self.calc_hitboxes()
 
@@ -211,6 +211,18 @@ class Player(pg.sprite.Sprite):
                 self.image = pg.image.load("art/player/player_default.png")
 
         pass
+
+    def handle_health(self):
+        """ Handles sprite display depending on health """  # TODO: Remove? Health is part of HUD, not player
+
+        if self.damage_cooldown > 0:
+            self.damage_cooldown -= 1
+
+
+    def take_damage(self):
+        self.health -= 1
+        self.damage_cooldown = 500
+
 
     # def update(self):
     #     """walk or spin, depending on the monkeys state"""

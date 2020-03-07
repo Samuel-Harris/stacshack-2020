@@ -65,7 +65,6 @@ def main():
     enemy_list.append(Enemy(screen_width, screen_height))
     for enemy in enemy_list:
         allsprites.add(enemy)
-    player.walls = walls.sprites()
 
     # Tracker
     item_count = defaultdict(lambda: 0)
@@ -104,6 +103,10 @@ def main():
         for enemy in enemy_list:
             if player.attack and player.attack_box.colliderect(enemy.hurtbox):
                 enemy.kill_enemy(player)
+
+            if player.hurtbox.colliderect(enemy.hurtbox):
+                if player.damage_cooldown == 0:
+                    player.take_damage()
 
         # draw
         # screen.fill((255, 255, 255))
