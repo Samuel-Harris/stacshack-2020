@@ -162,7 +162,6 @@ class Player(pg.sprite.Sprite):
                 self.potions.remove(potion)
                 if self.health < 8:
                     self.health += 1
-                print("health found")
 
         self.calc_hitboxes()
 
