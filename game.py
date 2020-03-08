@@ -79,7 +79,7 @@ def main():
     # Tracker specifically for special potion; and whether player holds it
     bomb_inuse = False
     bomb_counter = 0
-    bomb_delay = 100
+    bomb_delay = 330
 
     # Shows the introduction screen
     story = "THE STORY SO FAR:"
@@ -187,7 +187,7 @@ def main():
             item_count[Enemy2] = item_count[Enemy2] + 1
 
         # a special potion; if you need to collect 4, may as well have them spawn randomly
-        if random.random() < 0.03:
+        if random.random() < 0.003:
             potion = Potion2(screen_width, screen_height)
             potion_list.append(potion)
             allsprites.add(potion)

@@ -15,7 +15,7 @@ class Enemy(pg.sprite.Sprite):
         self.image, self.rect = load_image("enemy/enemy1_big.png", -1)
 
         # hitbox debug
-        self.hitbox_debug = True
+        self.hitbox_debug = False
 
         self.radius = 15
         self.rect.x = screen_width / 2 - self.radius / 2

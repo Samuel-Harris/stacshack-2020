@@ -14,7 +14,7 @@ class Player(pg.sprite.Sprite):
         self.image, self.rect = load_image("player/player_default.png", -1)
 
         # for showing hitboxes
-        self.hitbox_debug = True
+        self.hitbox_debug = False
 
         self.sprite_img_radius = 50
         self.sprite_char_radius = 15

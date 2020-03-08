@@ -11,7 +11,7 @@ class Knife2(pg.sprite.Sprite):
         self.image, self.rect = load_image("bullet/knife2.png", -1)
 
         # hitbox debug
-        self.hitbox_debug = True
+        self.hitbox_debug = False
 
         self.rect.x = start_x
         self.rect.y = start_y

@@ -18,7 +18,7 @@ class Potion2(pg.sprite.Sprite):
             self.images.append(pg.image.load(filename))
 
         # hitbox debug
-        self.hitbox_debug = True
+        self.hitbox_debug = False
 
         screen = pg.display.get_surface()
         self.area = screen.get_rect()

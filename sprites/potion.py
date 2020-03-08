@@ -11,7 +11,7 @@ class Potion(pg.sprite.Sprite):
         self.image, self.rect = load_image("powerup/potion1.png", -1)
 
         # hitbox debug
-        self.hitbox_debug = True
+        self.hitbox_debug = False
 
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
