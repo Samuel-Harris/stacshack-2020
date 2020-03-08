@@ -198,6 +198,7 @@ class Player(pg.sprite.Sprite):
             if self.hurtbox.colliderect(potion):
                 if isinstance(potion, Potion2):
                     self.bomb_ready = True
+                    print("bomb acquired")
                 else:
                     self.get_heal()
                 # remove potion

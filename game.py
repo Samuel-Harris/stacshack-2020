@@ -117,12 +117,21 @@ def main():
             # player bomb
             if player.bomb_ready and event.type == pg.KEYDOWN and event.key == pg.K_c:
                 potion2_present = False
+                player.bomb_ready = False
                 print("BOOM")
-                for enemy in enemy_list:
-                    enemy.kill()
-                enemy_list.clear()
-                allsprites.remove(enemy_list)
-                item_count[Enemy] = 0
+
+                # remove all bullets
+                for bullet in bullet_list:
+                    allsprites.remove(bullet)
+                    bullet_list.remove(bullet)
+                    bullet.kill()
+
+                # # remove all enemies?
+                # for enemy in enemy_list:
+                #     enemy.kill()
+                # enemy_list.clear()
+                # allsprites.remove(enemy_list)
+                # item_count[Enemy] = 0
 
         if random.random() < chance_spawn(item_count[Potion]):
             potion = Potion(screen_width, screen_height)
@@ -142,7 +151,7 @@ def main():
             potion_list.append(potion)
             allsprites.add(potion)
             potion2_present = True
-            print("bomb acquired")
+            print("bomb spawned")
 
         # update player (movement, attack frame, health)
         if not player.update():
@@ -196,6 +205,7 @@ def main():
 
                 if remove:
                     bullet_list.remove(bullet)
+                    allsprites.remove(bullet)
                     bullet.kill()
 
             # remove potions going off screen
