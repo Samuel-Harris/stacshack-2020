@@ -74,9 +74,10 @@ def main():
 
     # Shows the introduction screen
     story = "THE STORY SO FAR:"
-    story2 = "In a world filled with swords, you are a superhero with a bow"
-    story3 = "Pick up health and a special potion along the way to make swords disappear!"
-    story4 = "<TAB> to begin."
+    story2 = "In a world filled with swords, you are a superhero with a bow."
+    story3 = "Swing your bow, kill enemies and eliminate swords."
+    story4 = "Pick up health and a special potion along the way to make swords disappear!"
+    story5 = "<TAB> to begin."
 
     start_game = False
     while not start_game:
@@ -85,16 +86,19 @@ def main():
         text2 = font.render(story2, 1, (0, 0, 0))
         text3 = font.render(story3, 1, (0, 0, 0))
         text4 = font.render(story4, 1, (0, 0, 0))
+        text5 = font.render(story5, 1, (0, 0, 0))
 
         text_pos = text.get_rect(centerx=screen.get_width() / 2, centery=100)
         text_pos2 = text2.get_rect(centerx=screen.get_width() / 2, centery=200)
         text_pos3 = text3.get_rect(centerx=screen.get_width() / 2, centery=300)
         text_pos4 = text4.get_rect(centerx=screen.get_width() / 2, centery=400)
+        text_pos5 = text5.get_rect(centerx=screen.get_width() / 2, centery=500)
 
         screen.blit(text, text_pos)
         screen.blit(text2, text_pos2)
         screen.blit(text3, text_pos3)
         screen.blit(text4, text_pos4)
+        screen.blit(text5, text_pos5)
 
         pg.display.flip()
 
