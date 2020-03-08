@@ -10,6 +10,7 @@ from sprites.potion import Potion
 from sprites.wall import Wall
 from sprites.enemy import Enemy
 from util.spawning import chance_spawn
+from sprites.score_text import ScoreText
 
 
 def main():
@@ -47,6 +48,7 @@ def main():
     potion_list = []
     player = Player(screen_width, screen_height, potion_list)
     hud = HUD(player)
+    score_text = ScoreText(player)
 
     invisible_top_wall = Wall(0, -35, screen_width, 10)
     invisible_bottom_wall = Wall(0, screen_height + 25, screen_width, 10)
@@ -147,6 +149,8 @@ def main():
 
         # Draw Everything
         allsprites.draw(screen)
+        text_surface = score_text.generate_surface('Health: ')
+        screen.blit(text_surface, (screen_width - text_surface.get_width() - 90,  screen_height - text_surface.get_height() - 54))
         pg.display.flip()
 
         clock.tick(60)
