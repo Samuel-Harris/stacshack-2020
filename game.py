@@ -74,16 +74,29 @@ def main():
     potion2_present = False
 
     # Shows the introduction screen
-    story = """THE STORY SO FAR: \n
-In a world of swords and sorcery, you are the only superhero with a bow. Now, you must swing your bow to defeat the \n
-incoming bandits."""
+    story = "THE STORY SO FAR:"
+    story2 = "In a world filled with swords, you are a superhero with a bow"
+    story3 = "Pick up health and a special potion along the way to make swords disappear!"
+    story4 = "<TAB> to begin."
 
     start_game = False
     while not start_game:
-        font = pygame.font.SysFont("Arial", 30)
+        font = pygame.font.SysFont("Arial", 24)
         text = font.render(story, 1, (0, 0, 0))
-        text_pos = text.get_rect(centerx=screen.get_width() / 2, centery=screen.get_height()/2)
+        text2 = font.render(story2, 1, (0, 0, 0))
+        text3 = font.render(story3, 1, (0, 0, 0))
+        text4 = font.render(story4, 1, (0, 0, 0))
+
+        text_pos = text.get_rect(centerx=screen.get_width() / 2, centery=100)
+        text_pos2 = text2.get_rect(centerx=screen.get_width() / 2, centery=200)
+        text_pos3 = text3.get_rect(centerx=screen.get_width() / 2, centery=300)
+        text_pos4 = text4.get_rect(centerx=screen.get_width() / 2, centery=400)
+
         screen.blit(text, text_pos)
+        screen.blit(text2, text_pos2)
+        screen.blit(text3, text_pos3)
+        screen.blit(text4, text_pos4)
+
         pg.display.flip()
 
         for event in pg.event.get():
@@ -220,7 +233,7 @@ incoming bandits."""
 
             # remove potions going off screen
             for potion in potion_list:
-                if potion.rect.y > screen_height-30:
+                if potion.rect.y > screen_height - 30:
                     if isinstance(potion, Potion2):
                         potion2_present = False
                     allsprites.remove(potion)
@@ -228,15 +241,14 @@ incoming bandits."""
                     potion_list.remove(potion)
                     potion.kill()
 
-
         # draw
         allsprites.update()
 
         # Draw Everything
         allsprites.draw(screen)
-        text_surface = score_text.generate_surface('Health: ')
-        screen.blit(text_surface,
-                    (screen_width - text_surface.get_width() - 100, screen_height - text_surface.get_height() - 45))
+        # text_surface = score_text.generate_surface('Health: ')
+        # screen.blit(text_surface,
+        #             (screen_width - text_surface.get_width() - 100, screen_height - text_surface.get_height() - 45))
         pg.display.flip()
 
         clock.tick(60)
