@@ -20,10 +20,10 @@ class Knife2(pg.sprite.Sprite):
         self.true_y = start_y * 1.0
 
         # hitbox
-        self.size_x = 10
-        self.size_y = 10
+        self.size_x = 32
+        self.size_y = 32
         self.offset_x = 64 - self.size_x/2   # offset_x of 64 leads to centre x
-        self.offset_y = 64 - self.size_y/2    # offset_y of 64 leads to centre y
+        self.offset_y = 96 - self.size_y/2    # offset_y of 64 leads to centre y; offset_y of 96 for lower portion
         self.hurtbox = pg.Rect(self.rect.x, self.rect.y, 0, 0)  # initialises hitbox; not actual size
 
         self.player_x = player_x
@@ -42,12 +42,11 @@ class Knife2(pg.sprite.Sprite):
             pg.draw.rect(screen, (0, 0, 255), self.rect, 2)
 
         # update true positions + reflect them in rect positions;
-        # change x by slight homing
-        if self.true_x > self.player_x + 20:
-            self.true_x -= self.xspeed
-        elif self.true_x > self.player_x + 20:
-            self.true_x += self.xspeed
-        print(self.player_x)
+        # # change x by slight homing; doesn't work
+        # if self.true_x > self.player_x + 20:
+        #     self.true_x -= self.xspeed
+        # elif self.true_x > self.player_x + 20:
+        #     self.true_x += self.xspeed
 
         self.true_y += self.yspeed
 

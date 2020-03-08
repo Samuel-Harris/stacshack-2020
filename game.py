@@ -169,8 +169,6 @@ def main():
             potion = Potion2(screen_width, screen_height)
             potion_list.append(potion)
             allsprites.add(potion)
-            potion2_present = True
-            print("bomb spawned")
 
         # update player (movement, attack frame, health)
         if not player.update():
@@ -181,14 +179,18 @@ def main():
                 if player.attack and player.attack_box.colliderect(enemy.hurtbox):
                     enemy.kill_enemy(player)
                     enemy_list.remove(enemy)
-                    item_count[Enemy] = item_count[Enemy] - 1
+
+                    if isinstance(enemy, Enemy):
+                        item_count[Enemy] = item_count[Enemy] - 1
+                    elif isinstance(enemy, Enemy2):
+                        item_count[Enemy2] = item_count[Enemy2] - 1
                     allsprites.remove(enemy)  # TODO: Make enemies stay a while before being removed
 
                 if player.hurtbox.colliderect(enemy.hurtbox):
                     if player.damage_cooldown == 0:
                         player.get_hurt()
 
-                # remove if off screen; after calling 'implode' first though
+                # remove if off screen; after calling 'implode' first on Enemy though
                 if enemy.rect.y + 50 > screen_height:
                     if isinstance(enemy, Enemy):
                         bullets = enemy.implode(player.rect.x, screen_height)
@@ -196,9 +198,13 @@ def main():
                             bullet_list.append(bullet)
                             allsprites.add(bullet)
 
-                    enemy_list.remove(enemy)
-                    item_count[Enemy] = item_count[Enemy] - 1
+                    if isinstance(enemy, Enemy):
+                        item_count[Enemy] = item_count[Enemy] - 1
+                    elif isinstance(enemy, Enemy2):
+                        item_count[Enemy2] = item_count[Enemy2] - 1
+
                     allsprites.remove(enemy)
+                    enemy_list.remove(enemy)
                     enemy.kill()
 
                 # get each enemy to go through a 'shoot' cycle; returns None if no bullet generated
@@ -225,6 +231,8 @@ def main():
                 elif bullet.rect.x + 20 < 10 or bullet.rect.x + 20 > screen_width - 10 \
                         or bullet.rect.y + 20 < 10 or bullet.rect.y + 20 > screen_height - 10:
                     remove = True
+
+
 
                 if remove:
                     bullet_list.remove(bullet)

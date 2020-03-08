@@ -17,18 +17,20 @@ class Enemy2(pg.sprite.Sprite):
         self.hitbox_debug = True
 
         self.radius = 20
-        self.rect.x = 0
+        self.rect.x = randint(100, screen_width-100)
         self.rect.y = 0
+        self.true_x = self.rect.x
+        self.true_y = self.rect.y
 
-        # spawn only from top of screen
-        self.rect.topleft = randint(80, screen_width - 80), 0
+        # # spawn only from top of screen
+        # self.rect.topleft = randint(80, screen_width - 80), 0
 
         # spawn randomly in top half of screen
         # self.rect.topleft = randint(0, screen_width - 80), randint(0, screen_height//2 - 80 )
         # while distance.euclidean(self.rect.topleft, player_coordinates) < 200:
         #     self.rect.topleft = randint(0, screen_width - 80), randint(0, screen_height//2 - 80)
 
-        self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 60, 60)
+        self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 0, 0)    # instantiate hitbox; not actually used
 
         # automatic movement (to reflect map movement)
         self.auto_move = True
@@ -80,8 +82,11 @@ class Enemy2(pg.sprite.Sprite):
             screen = pg.display.get_surface()
             pg.draw.rect(screen, (255, 0, 0), self.hurtbox, 2)
         if self.auto_move:
-            self.rect.x += self.move_x
-            self.rect.y += self.move_y
-            self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 60, 60)
+            self.true_x += self.move_x
+            self.true_y += self.move_y
+
+            self.rect.x = round(self.true_x)
+            self.rect.y = round(self.true_y)
+            self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 28, 100, 60)
 
 

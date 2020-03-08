@@ -1,4 +1,4 @@
-BASE_SPAWN_RATE = 0.02  # 2% chance every frame (60 frames per second)
+BASE_SPAWN_RATE = 0.01  # 1% chance every frame (60 frames per second)
 
 
 def chance_spawn(no_items: int) -> float:
