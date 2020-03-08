@@ -80,7 +80,7 @@ def main():
 
     start_game = False
     while not start_game:
-        font = pygame.font.SysFont("Arial", 23)
+        font = pygame.font.SysFont("Arial", 24)
         text = font.render(story, 1, (0, 0, 0))
         text2 = font.render(story2, 1, (0, 0, 0))
         text3 = font.render(story3, 1, (0, 0, 0))
@@ -95,7 +95,6 @@ def main():
         screen.blit(text2, text_pos2)
         screen.blit(text3, text_pos3)
         screen.blit(text4, text_pos4)
-
 
         pg.display.flip()
 
@@ -223,14 +222,13 @@ def main():
 
             # remove potions going off screen
             for potion in potion_list:
-                if potion.rect.y > screen_height-30:
+                if potion.rect.y > screen_height - 30:
                     if isinstance(potion, Potion2):
                         potion2_present = False
                     allsprites.remove(potion)
                     item_count[Potion] = item_count[Potion] - 1
                     potion_list.remove(potion)
                     potion.kill()
-
 
         # draw
         allsprites.update()
