@@ -159,9 +159,9 @@ def main():
                     bullet.kill()
 
             for potion in potion_list:
-                if potion.rect.y > screen_height-10:
+                if potion.rect.y > screen_height-30:
                     allsprites.remove(potion)
-                    item_count[Enemy] = item_count[Enemy] - 1
+                    item_count[Potion] = item_count[Potion] - 1
                     potion_list.remove(potion)
                     potion.kill()
 
