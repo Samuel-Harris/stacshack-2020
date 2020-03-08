@@ -4,7 +4,7 @@ from collections import defaultdict
 import pygame
 import pygame as pg
 import random
-import os
+import time
 
 from sprites.enemy2 import Enemy2
 from sprites.hud import HUD
@@ -142,6 +142,7 @@ def main():
 
             # player bomb
             if player.bomb_ready and event.type == pg.KEYDOWN and event.key == pg.K_c:
+                pg.mixer.Sound('sound/tactical-nuke.wav').play()
                 bomb_inuse = True
                 player.bomb_ready = False
 
