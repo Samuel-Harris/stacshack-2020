@@ -126,9 +126,9 @@ incoming bandits."""
 
                 # remove all bullets
                 for bullet in bullet_list:
-                    allsprites.remove(bullet)
-                    bullet_list.remove(bullet)
                     bullet.kill()
+                bullet_list.clear()
+                allsprites.remove(bullet_list)
 
                 # # remove all enemies?
                 # for enemy in enemy_list:
