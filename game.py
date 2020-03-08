@@ -23,6 +23,7 @@ def main():
     """this function is called when the program starts.
        it initializes everything it needs, then runs in
        a loop until the function returns."""
+
     # Initialize Everything
     pg.init()
     screen = pg.display.set_mode((screen_width, screen_height))
@@ -30,18 +31,8 @@ def main():
     pg.mouse.set_visible(0)
 
     # Create The Background
-    # background = pg.Surface(screen.get_size())
-    # background = background.convert()
-    # background.fill((250, 250, 250))
     bg = pg.image.load("art/background/background.png")
     bg_offset = 0
-
-    # Put Text On The Background, Centered
-    # if pg.font:
-    #     font = pg.font.Font(None, 36)
-    #     text = font.render("Pummel The Chimp, And Win $$$", 1, (10, 10, 10))
-    #     textpos = text.get_rect(centerx=background.get_width() / 2)
-    #     background.blit(text, textpos)
 
     # Display The Background
     screen.blit(bg, (0, 0))
@@ -81,6 +72,7 @@ def main():
     # Tracker specifically for special potion; and whether player holds it
     potion2_present = False
 
+    # Shows the introduction screen
     story = """THE STORY SO FAR: \n
 In a world of swords and sorcery, you are the only superhero with a bow. Now, you must swing your bow to defeat the \n
 incoming bandits."""
@@ -253,12 +245,15 @@ def end_screen(screen, background, player):
         font = pg.font.SysFont('Cambria', 80)
         final_score = font.render("Score:" + str(player.score), 1, (0, 0, 0))
         screen.blit(final_score, (screen_width / 2 - final_score.get_width(), 150))
+        final_score = font.render("Try again! <Space>", 1, (0, 0, 0))
+        screen.blit(final_score, ((screen_width / 2) - 200, 450))
         pg.display.update()
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 displaying_score = False
                 pg.quit()
+                quit()
             if event.type == pg.MOUSEBUTTONDOWN:
                 displaying_score = False
                 player = None
