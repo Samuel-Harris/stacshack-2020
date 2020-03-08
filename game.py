@@ -161,12 +161,13 @@ def main():
                 bullet_list.clear()
                 allsprites.remove(bullet_list)
 
-                # # remove all enemies?
-                # for enemy in enemy_list:
-                #     enemy.kill()
-                # enemy_list.clear()
-                # allsprites.remove(enemy_list)
-                # item_count[Enemy] = 0
+                # remove all enemies?
+                for enemy in enemy_list:
+                    enemy.kill()
+                enemy_list.clear()
+                allsprites.remove(enemy_list)
+                item_count[Enemy] = 0
+                item_count[Enemy2] = 0
 
         if random.random() < chance_spawn(item_count[Potion]):
             potion = Potion(screen_width, screen_height)

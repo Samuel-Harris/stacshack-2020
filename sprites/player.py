@@ -198,10 +198,11 @@ class Player(pg.sprite.Sprite):
         for potion in potion_hit_list:
             if self.hurtbox.colliderect(potion):
                 if isinstance(potion, Potion2):
+                    self.bomb_count += 1
                     if self.bomb_count < 4:
-                        self.bomb_count += 1
                         print("bomb %d acquired" % self.bomb_count)
                     else:
+                        self.bomb_count = 4
                         self.bomb_ready = True
                         print("bomb ready")
                 else:
