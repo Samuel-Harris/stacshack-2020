@@ -15,6 +15,7 @@ from sprites.score_text import ScoreText
 screen_width = 800
 screen_height = 600
 
+
 def main():
     """this function is called when the program starts.
        it initializes everything it needs, then runs in
@@ -57,7 +58,7 @@ def main():
     top_wall = Wall(0, 0, screen_width, 10)
     bottom_wall = Wall(0, screen_height - 10, screen_width, 10)
     left_wall = Wall(0, 0, 10, screen_height)
-    right_wall = Wall(screen_width-10, 0, 10, screen_height)
+    right_wall = Wall(screen_width - 10, 0, 10, screen_height)
     walls = pg.sprite.RenderPlain(top_wall, bottom_wall, left_wall, right_wall)
     collision_walls = pg.sprite.RenderPlain(invisible_top_wall, invisible_bottom_wall, invisible_left_wall,
                                             invisible_right_wall)
@@ -81,7 +82,7 @@ def main():
         screen.blit(bg, (0, bg_offset - screen_height))
         if bg_offset < screen_height:
             bg_offset += 1
-        else:   # once offset goes off the screen, reset it
+        else:  # once offset goes off the screen, reset it
             bg_offset = 0
 
         for event in pg.event.get():
@@ -133,7 +134,7 @@ def main():
                     allsprites.remove(enemy)
 
                 # get each enemy to go through a 'shoot' cycle; returns None if no bullet generated
-                bullet = enemy.shoot(player.rect.x+50, player.rect.y+50)
+                bullet = enemy.shoot(player.rect.x + 50, player.rect.y + 50)
                 if bullet:
                     bullet_list.append(bullet)
                     allsprites.add(bullet)
@@ -149,8 +150,8 @@ def main():
                         player.get_hurt()
                     remove = True
                 # off screen; add 20 to coordinates to centre it (knife is 40x40 px)
-                elif bullet.rect.x+20 < 10 or bullet.rect.x+20 > screen_width-10 \
-                        or bullet.rect.y+20 < 10 or bullet.rect.y+20 > screen_height-10:
+                elif bullet.rect.x + 20 < 10 or bullet.rect.x + 20 > screen_width - 10 \
+                        or bullet.rect.y + 20 < 10 or bullet.rect.y + 20 > screen_height - 10:
                     remove = True
 
                 if remove:
@@ -163,12 +164,14 @@ def main():
         # Draw Everything
         allsprites.draw(screen)
         text_surface = score_text.generate_surface('Health: ')
-        screen.blit(text_surface, (screen_width - text_surface.get_width() - 90,  screen_height - text_surface.get_height() - 54))
+        screen.blit(text_surface,
+                    (screen_width - text_surface.get_width() - 90, screen_height - text_surface.get_height() - 54))
         pg.display.flip()
 
         clock.tick(60)
 
     pg.quit()
+
 
 # when the player dies, this is called
 def end_screen(screen, background, player):
