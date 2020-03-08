@@ -77,7 +77,9 @@ def main():
     item_count = defaultdict(lambda: 0)
 
     # Tracker specifically for special potion; and whether player holds it
-    potion2_present = False
+    bomb_inuse = False
+    bomb_counter = 0
+    bomb_delay = 100
 
     # Shows the introduction screen
     story = "THE STORY SO FAR:"
@@ -140,10 +142,19 @@ def main():
 
             # player bomb
             if player.bomb_ready and event.type == pg.KEYDOWN and event.key == pg.K_c:
-                potion2_present = False
+                bomb_inuse = True
                 player.bomb_ready = False
+
+        if bomb_inuse:
+            print(bomb_counter, bomb_delay)
+            if bomb_counter < bomb_delay:
+                bomb_counter += 1
+                print(bomb_counter)
+            else:
                 player.bomb_count = 0
                 print("BOOM")
+                bomb_inuse = False
+                bomb_counter = 0
 
                 # remove all bullets
                 for bullet in bullet_list:
@@ -177,7 +188,7 @@ def main():
             item_count[Enemy2] = item_count[Enemy2] + 1
 
         # a special potion; if you need to collect 4, may as well have them spawn randomly
-        if random.random() < 0.003:
+        if random.random() < 0.03:
             potion = Potion2(screen_width, screen_height)
             potion_list.append(potion)
             allsprites.add(potion)
