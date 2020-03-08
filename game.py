@@ -117,6 +117,18 @@ def main():
                     if player.damage_cooldown == 0:
                         player.get_hurt()
 
+                # remove if off screen; after calling 'implode' first though
+                if enemy.rect.y + 50 > screen_height:
+                    if isinstance(enemy, Enemy):
+                        bullets = enemy.implode(player.rect.x, screen_height)
+                        for bullet in bullets:
+                            bullet_list.append(bullet)
+                            allsprites.add(bullet)
+
+                    enemy_list.remove(enemy)
+                    item_count[Enemy] = item_count[Enemy] - 1
+                    allsprites.remove(enemy)
+
                 # get each enemy to go through a 'shoot' cycle; returns None if no bullet generated
                 bullet = enemy.shoot(player.rect.x+50, player.rect.y+50)
                 if bullet:

@@ -34,6 +34,10 @@ class Knife(pg.sprite.Sprite):
         self.angle += angle_offset
         self.image = self.rot_center_sq(self.image, self.angle)
 
+        # memes
+        self.auto_rotate = False
+        self.auto_rotate_angle = 10
+
         # rotate hitbox - doesn't work
         # self.hurtbox = self.hurtbox(center=rect.center)
 
@@ -56,8 +60,11 @@ class Knife(pg.sprite.Sprite):
         self.rect.y = round(self.true_y)
         self.hurtbox = pg.Rect(self.rect.x+self.offset_x, self.rect.y+self.offset_y,
                                self.size_x, self.size_y)
+        if self.auto_rotate:
+            self.image = self.rot_center_sq(self.image, self.auto_rotate_angle)
 
-    def face_to_player(self, x, y, px, py):
+    @staticmethod
+    def face_to_player(x, y, px, py):
         """ Given current position (x, y) and player position (px, py), gives a dx/dy to follow
         'dx' and 'dy' should be multiplied by self.speed in order to give the change in x and y. """
         Dx = px - x     # total difference in x
