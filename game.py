@@ -8,6 +8,7 @@ import random
 from sprites.enemy2 import Enemy2
 from sprites.hud import HUD
 from sprites.inventory import Inventory
+from sprites.knife2 import Knife2
 from sprites.player import Player
 from sprites.potion import Potion
 from sprites.potion2 import Potion2
@@ -115,6 +116,8 @@ def main():
     # Main Loop
     going = True
     while going:
+        # print(item_count[Enemy], item_count[Enemy2], item_count[Potion])
+
         # draw two backgrounds, slowly moving down
         screen.blit(bg, (0, bg_offset))
         screen.blit(bg, (0, bg_offset - screen_height))
@@ -237,7 +240,13 @@ def main():
                         or bullet.rect.y + 20 < 10 or bullet.rect.y + 20 > screen_height - 10:
                     remove = True
 
-
+                # cheeky bodge: homing
+                if isinstance(bullet, Knife2):
+                    xdist = abs(player.rect.x - bullet.rect.x)
+                    if bullet.rect.x+40 < player.rect.x+50 - 20:
+                        bullet.true_x += bullet.xspeed * xdist
+                    elif bullet.rect.x+40 > player.rect.x+50 + 20:
+                        bullet.true_x -= bullet.xspeed * xdist
 
                 if remove:
                     bullet_list.remove(bullet)

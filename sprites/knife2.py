@@ -27,8 +27,8 @@ class Knife2(pg.sprite.Sprite):
         self.hurtbox = pg.Rect(self.rect.x, self.rect.y, 0, 0)  # initialises hitbox; not actual size
 
         self.player_x = player_x
-        self.xspeed = 2
-        self.yspeed = 4
+        self.xspeed = 0.03  # proportion of distance covered in a frame
+        self.yspeed = 8
 
         # # memes - doesn't work
         # self.auto_rotate = True

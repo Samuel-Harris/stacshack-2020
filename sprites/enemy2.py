@@ -35,7 +35,7 @@ class Enemy2(pg.sprite.Sprite):
         # automatic movement (to reflect map movement)
         self.auto_move = True
         self.move_x = 0
-        self.move_y = 0.2
+        self.move_y = 0.05
 
         # bullet generation
         self.shoot_delay = 150      # pause between bursts
@@ -49,6 +49,8 @@ class Enemy2(pg.sprite.Sprite):
         else:
             self.bullet_counter_reset = self.shoot_delay
             self.bullet_frames = [self.shoot_delay-1]
+
+        self.pew_sound = pg.mixer.Sound("sound/pew_12.wav")
 
     def calc_hitboxes(self):
         self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 60, 60)
@@ -65,6 +67,7 @@ class Enemy2(pg.sprite.Sprite):
         self.bullet_counter %= self.bullet_counter_reset    # modulo
 
         if self.bullet_counter in self.bullet_frames:
+            self.pew_sound.play()
             return Knife2(self.rect.x, self.rect.y, player_x)
         else:
             return None
