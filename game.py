@@ -79,10 +79,14 @@ def main():
     # Tracker specifically for special potion; and whether player holds it
     potion2_present = False
 
+    story = """THE STORY SO FAR: \n
+In a world of swords and sorcery, you are the only superhero with a bow. Now, you must swing your bow to defeat the \n
+incoming bandits."""
+
     start_game = False
     while not start_game:
         font = pygame.font.SysFont("Arial", 30)
-        text = font.render("GAME RULES:", 1, (0, 0, 0))
+        text = font.render(story, 1, (0, 0, 0))
         text_pos = text.get_rect(centerx=screen.get_width() / 2, centery=screen.get_height()/2)
         screen.blit(text, text_pos)
         pg.display.flip()
