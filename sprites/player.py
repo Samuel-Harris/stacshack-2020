@@ -84,14 +84,11 @@ class Player(pg.sprite.Sprite):
 
     def update(self):
         self.handle_keys()
-        self.handle_damage()
+        is_alive = self.handle_damage()
         self.handle_attack()
         if self.hitbox_debug:
             self.handle_hitbox_debug()
-
-        # movement due to scrolling background; doesn't work due to conflict with handle_keys
-        if self.scroll_background:
-            self.rect.y += self.bg_move
+        return is_alive
 
     def handle_hitbox_debug(self):
         screen = pg.display.get_surface()
@@ -218,7 +215,7 @@ class Player(pg.sprite.Sprite):
             self.health -= 1
             self.damage = True
             self.damage_frame = 0
-            self.damage_cooldown = 500
+            self.damage_cooldown = 100
 
     def handle_damage(self):
         """ Handles sprite display upon recovering/healing damage """
@@ -243,38 +240,4 @@ class Player(pg.sprite.Sprite):
                 self.damage = False
                 self.damage_frame = 0
                 self.image = pg.image.load("art/player/player_default.png")
-
-    # def update(self):
-    #     """walk or spin, depending on the monkeys state"""
-    #     if self.dizzy:
-    #         self._spin()
-    #     else:
-    #         self._walk()
-    #
-    # def _walk(self):
-    #     """move the monkey across the screen, and turn at the ends"""
-    #     newpos = self.rect.move((self.move, 0))
-    #     if not self.area.contains(newpos):
-    #         if self.rect.left < self.area.left or self.rect.right > self.area.right:
-    #             self.move = -self.move
-    #             newpos = self.rect.move((self.move, 0))
-    #             self.image = pg.transform.flip(self.image, 1, 0)
-    #         self.rect = newpos
-    #
-    # def _spin(self):
-    #     """spin the monkey image"""
-    #     center = self.rect.center
-    #     self.dizzy = self.dizzy + 12
-    #     if self.dizzy >= 360:
-    #         self.dizzy = 0
-    #         self.image = self.original
-    #     else:
-    #         rotate = pg.transform.rotate
-    #         self.image = rotate(self.original, self.dizzy)
-    #     self.rect = self.image.get_rect(center=center)
-    #
-    # def punched(self):
-    #     """this will cause the monkey to start spinning"""
-    #     if not self.dizzy:
-    #         self.dizzy = 1
-    #         self.original = self.image
+        return self.health > 0
