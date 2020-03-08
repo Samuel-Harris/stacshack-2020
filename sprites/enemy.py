@@ -16,26 +16,24 @@ class Enemy(pg.sprite.Sprite):
         # hitbox debug
         self.hitbox_debug = True
 
-        screen = pg.display.get_surface()
-        self.area = screen.get_rect()
         self.radius = 15
         self.rect.x = screen_width / 2 - self.radius / 2
         self.rect.y = screen_height / 2 - self.radius / 2
-        self.dist = 5
-        self.screen_width = screen_width
-        self.screen_height = screen_height
-        self.walls = None
-        self.rect.topleft = randint(0, screen_width - 80), randint(0, screen_height - 80)
+
+        self.rect.topleft = randint(0, screen_width - 80), randint(0, screen_height//2 - 80)
         while distance.euclidean(self.rect.topleft, player_coordinates) < 200:
-            self.rect.topleft = randint(0, screen_width - 80), randint(0, screen_height - 80)
-        self.health = 1
-        self.move = 9
+            self.rect.topleft = randint(0, screen_width - 80), randint(0, screen_height//2 - 80)
 
         self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 60, 60)
 
         # bullet generation
-        self.bullet_delay = 50
+        self.shoot_delay = 100      # pause between bursts
+        self.burst_delay = 20       # pause between shots in a burst
+        self.burst_count = 3        # number of shots per burst
         self.bullet_counter = 0
+        # generate frames at which enemy shoots
+        self.bullet_counter_reset = self.shoot_delay + self.burst_delay * self.burst_count
+        self.bullet_frames = range(self.shoot_delay, self.bullet_counter_reset, self.burst_delay)
 
     def calc_hitboxes(self):
         self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 60, 60)
@@ -48,11 +46,12 @@ class Enemy(pg.sprite.Sprite):
 
     def shoot(self, player_x, player_y):
         """ Create a knife object and throw it at the player """
-        if self.bullet_counter == self.bullet_delay:
-            self.bullet_counter = 0
+        self.bullet_counter += 1
+        self.bullet_counter %= self.bullet_counter_reset    # modulo
+
+        if self.bullet_counter in self.bullet_frames:
             return Knife(self.rect.x, self.rect.y, player_x, player_y)
         else:
-            self.bullet_counter += 1
             return None
 
     def update(self):

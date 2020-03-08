@@ -7,12 +7,12 @@ from util.load import load_image
 
 class Knife(pg.sprite.Sprite):
 
-    def __init__(self, start_x, start_y, player_x, player_y):
+    def __init__(self, start_x, start_y, player_x, player_y, angle_offset=0):
         pg.sprite.Sprite.__init__(self)
         self.image, self.rect = load_image("bullet/knife1.png", -1)
 
         # hitbox debug
-        self.hitbox_debug = True
+        self.hitbox_debug = False
 
         self.rect.x = start_x
         self.rect.y = start_y
@@ -27,10 +27,11 @@ class Knife(pg.sprite.Sprite):
         self.offset_y = 20 - self.size_y/2    # offset_y of 20 leads to centre y
         self.hurtbox = pg.Rect(self.rect.x, self.rect.y, 0, 0)
 
-        self.speed = 1
+        self.speed = 2
 
         # set movement + rotation towards player
         self.dx, self.dy, self.angle = self.face_to_player(start_x, start_y, player_x, player_y)
+        self.angle += angle_offset
         self.image = self.rot_center_sq(self.image, self.angle)
 
         # rotate hitbox - doesn't work
