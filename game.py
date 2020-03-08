@@ -166,7 +166,7 @@ def main():
             allsprites.add(enemy)
             item_count[Enemy] = item_count[Enemy] + 1
 
-        if random.random() < chance_spawn(item_count[Enemy2]):
+        if item_count[Enemy2] <= 5 and random.random() < chance_spawn(item_count[Enemy2]):
             enemy = Enemy2(screen_width, screen_height)
             enemy_list.append(enemy)
             allsprites.add(enemy)
