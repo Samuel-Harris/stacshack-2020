@@ -251,12 +251,15 @@ def end_screen(screen, background, player):
         font = pg.font.SysFont('Cambria', 80)
         final_score = font.render("Score:" + str(player.score), 1, (0, 0, 0))
         screen.blit(final_score, (screen_width / 2 - final_score.get_width(), 150))
+        final_score = font.render("Try again! <Space>", 1, (0, 0, 0))
+        screen.blit(final_score, ((screen_width / 2) - 200, 450))
         pg.display.update()
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 displaying_score = False
                 pg.quit()
+                quit()
             if event.type == pg.MOUSEBUTTONDOWN:
                 displaying_score = False
                 player = None
