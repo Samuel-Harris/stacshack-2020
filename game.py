@@ -31,7 +31,7 @@ def main():
     pg.mixer.init()
     pg.init()
     screen = pg.display.set_mode((screen_width, screen_height))
-    pg.display.set_caption("Bullet Hell Thing")
+    pg.display.set_caption("Bullet Helln't")
     pg.mouse.set_visible(0)
 
     # Create The Background
