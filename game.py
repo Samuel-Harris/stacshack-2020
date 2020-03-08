@@ -12,6 +12,8 @@ from sprites.enemy import Enemy
 from util.spawning import chance_spawn
 from sprites.score_text import ScoreText
 
+screen_width = 800
+screen_height = 600
 
 def main():
     """this function is called when the program starts.
@@ -19,8 +21,6 @@ def main():
        a loop until the function returns."""
     # Initialize Everything
     pg.init()
-    screen_width = 800
-    screen_height = 600
     screen = pg.display.set_mode((screen_width, screen_height))
     pg.display.set_caption("Bullet Hell Thing")
     pg.mouse.set_visible(0)
@@ -105,7 +105,8 @@ def main():
             item_count[Enemy] = item_count[Enemy] + 1
 
         # update player (movement, attack frame, health)
-        player.update()
+        if not player.update():
+            end_screen(screen, bg, player)
 
         if clock.get_time() % 5:
             for enemy in enemy_list:
@@ -168,6 +169,35 @@ def main():
         clock.tick(60)
 
     pg.quit()
+
+# when the player dies, this is called
+def end_screen(screen, background, player):
+    displaying_score = True
+    final_score = player.score
+
+    while displaying_score:
+        pg.time.delay(100)
+
+        screen.blit(background, (0, 0))
+        font = pg.font.SysFont('Cambria', 80)
+        final_score = font.render("Score:" + str(player.score), 1, (0, 0, 0))
+        screen.blit(final_score, (screen_width / 2 - final_score.get_width(), 150))
+        pg.display.update()
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                displaying_score = False
+                pg.quit()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                displaying_score = False
+                player = None
+                break
+            if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
+                displaying_score = False
+                player = None
+                break
+
+    main()
 
 
 if __name__ == '__main__':
