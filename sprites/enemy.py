@@ -53,13 +53,13 @@ class Enemy(pg.sprite.Sprite):
         self.image, self.rect = load_image("enemy/enemy1x_big.png", -1)
         self.rect.topleft = topleft
 
-    def shoot(self, player_x, player_y, mod=0):
+    def shoot(self, player_x, player_y):
         """ Create a knife object and throw it at the player """
         self.bullet_counter += 1
         self.bullet_counter %= self.bullet_counter_reset    # modulo
 
         if self.bullet_counter in self.bullet_frames:
-            return Knife(self.rect.x, self.rect.y, player_x, player_y)
+            return Knife(self.rect.x, self.rect.y, player_x + 50, player_y + 50)  # +50 to account for offset
         else:
             return None
 

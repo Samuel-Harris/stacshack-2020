@@ -5,6 +5,7 @@ import pygame
 import pygame as pg
 import random
 
+from sprites.enemy2 import Enemy2
 from sprites.hud import HUD
 from sprites.inventory import Inventory
 from sprites.player import Player
@@ -144,6 +145,12 @@ incoming bandits."""
             allsprites.add(enemy)
             item_count[Enemy] = item_count[Enemy] + 1
 
+        if random.random() < chance_spawn(item_count[Enemy2]):
+            enemy = Enemy2(screen_width, screen_height)
+            enemy_list.append(enemy)
+            allsprites.add(enemy)
+            item_count[Enemy2] = item_count[Enemy2] + 1
+
         # a special potion; if you need to collect 4, may as well have them spawn randomly
         if random.random() < 0.003:
             potion = Potion2(screen_width, screen_height)
@@ -182,7 +189,11 @@ incoming bandits."""
                     enemy.kill()
 
                 # get each enemy to go through a 'shoot' cycle; returns None if no bullet generated
-                bullet = enemy.shoot(player.rect.x + 50, player.rect.y + 50)
+                # bullet = None
+                # if isinstance(enemy, Enemy):
+                bullet = enemy.shoot(player.rect.x, player.rect.y)
+                # elif isinstance(enemy, Enemy2):
+                #     bullet = enemy.shoot(player.h)
                 if bullet:
                     bullet_list.append(bullet)
                     allsprites.add(bullet)
