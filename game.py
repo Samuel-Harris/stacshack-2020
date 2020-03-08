@@ -146,10 +146,8 @@ def main():
                 player.bomb_ready = False
 
         if bomb_inuse:
-            print(bomb_counter, bomb_delay)
             if bomb_counter < bomb_delay:
                 bomb_counter += 1
-                print(bomb_counter)
             else:
                 player.bomb_count = 0
                 print("BOOM")
