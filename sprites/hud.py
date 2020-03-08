@@ -1,4 +1,3 @@
-import pygame
 import pygame as pg
 from util.load import load_image
 from sprites.player import Player

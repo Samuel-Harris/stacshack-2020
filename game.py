@@ -6,6 +6,7 @@ import pygame as pg
 import random
 
 from sprites.hud import HUD
+from sprites.inventory import Inventory
 from sprites.player import Player
 from sprites.potion import Potion
 from sprites.potion2 import Potion2
@@ -51,6 +52,7 @@ def main():
     potion_list = []
     player = Player(screen_width, screen_height, potion_list)
     hud = HUD(player)
+    inv = Inventory(player)
     score_text = ScoreText(player)
 
     invisible_top_wall = Wall(0, -35, screen_width, 10)
@@ -64,7 +66,7 @@ def main():
     walls = pg.sprite.RenderPlain(top_wall, bottom_wall, left_wall, right_wall)
     collision_walls = pg.sprite.RenderPlain(invisible_top_wall, invisible_bottom_wall, invisible_left_wall,
                                             invisible_right_wall)
-    allsprites = pg.sprite.RenderPlain(player, walls, collision_walls, hud)
+    allsprites = pg.sprite.RenderPlain(player, walls, collision_walls, hud, inv)
     player.walls = collision_walls.sprites()
 
     bullet_list = []
