@@ -25,6 +25,7 @@ def main():
        a loop until the function returns."""
 
     # Initialize Everything
+    pg.mixer.init()
     pg.init()
     screen = pg.display.set_mode((screen_width, screen_height))
     pg.display.set_caption("Bullet Hell Thing")
@@ -156,7 +157,7 @@ def main():
             item_count[Potion] = item_count[Potion] + 1
 
         if random.random() < chance_spawn(item_count[Enemy]):
-            enemy = Enemy(screen_width, screen_height, player.rect.center)
+            enemy = Enemy(screen_width, screen_height)
             enemy_list.append(enemy)
             allsprites.add(enemy)
             item_count[Enemy] = item_count[Enemy] + 1
