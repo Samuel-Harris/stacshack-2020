@@ -4,6 +4,7 @@ from collections import defaultdict
 import pygame
 import pygame as pg
 import random
+import os
 
 from sprites.enemy2 import Enemy2
 from sprites.hud import HUD
@@ -41,13 +42,16 @@ def main():
     screen.blit(bg, (0, 0))
     # pg.display.flip()
 
+    #
+    pg.mixer.music.load('sound/music.wav')
+    pg.mixer_music.play(-1)
+
     # Prepare Game Objects
     clock = pg.time.Clock()
     potion_list = []
     player = Player(screen_width, screen_height, potion_list)
     hud = HUD(player)
     inv = Inventory(player)
-    score_text = ScoreText(player)
 
     invisible_top_wall = Wall(0, -35, screen_width, 10)
     invisible_bottom_wall = Wall(0, screen_height + 25, screen_width, 10)
