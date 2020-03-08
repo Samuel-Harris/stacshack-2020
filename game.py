@@ -4,7 +4,7 @@ from collections import defaultdict
 import pygame
 import pygame as pg
 import random
-import os
+import time
 
 from sprites.enemy2 import Enemy2
 from sprites.hud import HUD
@@ -144,6 +144,8 @@ def main():
                 player.bomb_ready = False
                 player.bomb_count = 0
                 print("BOOM")
+                pg.mixer.Sound('sound/tactical-nuke.wav').play()
+                time.sleep(5.5)
 
                 # remove all bullets
                 for bullet in bullet_list:
@@ -177,7 +179,7 @@ def main():
             item_count[Enemy2] = item_count[Enemy2] + 1
 
         # a special potion; if you need to collect 4, may as well have them spawn randomly
-        if random.random() < 0.003:
+        if random.random() < 0.03:
             potion = Potion2(screen_width, screen_height)
             potion_list.append(potion)
             allsprites.add(potion)
