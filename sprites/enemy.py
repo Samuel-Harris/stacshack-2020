@@ -53,7 +53,7 @@ class Enemy(pg.sprite.Sprite):
             index = 11
         else:
             index = 13
-        self.pew_sound = pg.mixer.Sound(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'sound\\pew_') + str(index) + '.wav'))
+        self.pew_sound = pg.mixer.Sound('sound/pew_' + str(index) + '.wav')
 
     def calc_hitboxes(self):
         self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 60, 60)
@@ -63,7 +63,7 @@ class Enemy(pg.sprite.Sprite):
         topleft = self.rect.topleft
         self.image, self.rect = load_image("enemy/enemy1x_big.png", -1)
         self.rect.topleft = topleft
-        pg.mixer.Sound(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'sound\\pew_12.wav'))).play()
+        pg.mixer.Sound('sound/pew_12.wav').play()
 
     def shoot(self, player_x, player_y, mod=0):
         """ Create a knife object and throw it at the player """
