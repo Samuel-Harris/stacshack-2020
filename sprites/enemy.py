@@ -1,5 +1,6 @@
-from random import randint
-from scipy.spatial import distance
+import os
+from os import path
+from random import randint, choice
 
 import pygame as pg
 
@@ -9,7 +10,7 @@ from util.load import load_image
 
 class Enemy(pg.sprite.Sprite):
 
-    def __init__(self, screen_width, screen_height, player_coordinates):
+    def __init__(self, screen_width, screen_height):
         pg.sprite.Sprite.__init__(self)
         self.image, self.rect = load_image("enemy/enemy1_big.png", -1)
 
@@ -44,6 +45,16 @@ class Enemy(pg.sprite.Sprite):
         self.bullet_counter_reset = self.shoot_delay + self.burst_delay * self.burst_count
         self.bullet_frames = range(self.shoot_delay, self.bullet_counter_reset, self.burst_delay)
 
+        # sound effect
+        num =randint(1, 101)
+        if num != 69:
+            index = randint(1, 10)
+        elif num > 95:
+            index = 11
+        else:
+            index = 13
+        self.pew_sound = pg.mixer.Sound('sound/pew_' + str(index) + '.wav')
+
     def calc_hitboxes(self):
         self.hurtbox = pg.Rect(self.rect.x + 10, self.rect.y + 10, 60, 60)
 
@@ -52,6 +63,7 @@ class Enemy(pg.sprite.Sprite):
         topleft = self.rect.topleft
         self.image, self.rect = load_image("enemy/enemy1x_big.png", -1)
         self.rect.topleft = topleft
+        pg.mixer.Sound('sound/pew_12.wav').play()
 
     def shoot(self, player_x, player_y):
         """ Create a knife object and throw it at the player """
@@ -59,7 +71,8 @@ class Enemy(pg.sprite.Sprite):
         self.bullet_counter %= self.bullet_counter_reset    # modulo
 
         if self.bullet_counter in self.bullet_frames:
-            return Knife(self.rect.x, self.rect.y, player_x + 50, player_y + 50)  # +50 to account for offset
+            self.pew_sound.play()
+            return Knife(self.rect.x, self.rect.y, player_x+50, player_y+50)
         else:
             return None
 
