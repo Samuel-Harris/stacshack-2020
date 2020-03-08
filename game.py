@@ -122,6 +122,7 @@ incoming bandits."""
             if player.bomb_ready and event.type == pg.KEYDOWN and event.key == pg.K_c:
                 potion2_present = False
                 player.bomb_ready = False
+                player.bomb_count = 0
                 print("BOOM")
 
                 # remove all bullets
@@ -149,8 +150,8 @@ incoming bandits."""
             allsprites.add(enemy)
             item_count[Enemy] = item_count[Enemy] + 1
 
-        # a special potion
-        if not potion2_present and random.random() < 0.01:
+        # a special potion; if you need to collect 4, may as well have them spawn randomly
+        if random.random() < 0.003:
             potion = Potion2(screen_width, screen_height)
             potion_list.append(potion)
             allsprites.add(potion)

@@ -59,7 +59,8 @@ class Player(pg.sprite.Sprite):
                 self.attack_ready_bar.set_at((x, y), pg.Color(100, 100, 100))
 
         # bomb ready (from potion)
-        self.bomb_ready = False
+        self.bomb_count = 0
+        self.bomb_ready = False     # set to True when bomb_count == 4
 
         self.potions = potion_list
 
@@ -197,8 +198,12 @@ class Player(pg.sprite.Sprite):
         for potion in potion_hit_list:
             if self.hurtbox.colliderect(potion):
                 if isinstance(potion, Potion2):
-                    self.bomb_ready = True
-                    print("bomb acquired")
+                    self.bomb_count += 1
+                    if self.bomb_count < 4:
+                        print("bomb %d acquired" % self.bomb_count)
+                    else:
+                        self.bomb_ready = True
+                        print("bomb ready")
                 else:
                     self.get_heal()
                 # remove potion
