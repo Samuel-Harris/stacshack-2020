@@ -1,6 +1,7 @@
 # Import Modules
 from collections import defaultdict
 
+import pygame
 import pygame as pg
 import random
 
@@ -77,6 +78,22 @@ def main():
 
     # Tracker specifically for special potion; and whether player holds it
     potion2_present = False
+
+    start_game = False
+    while not start_game:
+        font = pygame.font.SysFont("Arial", 30)
+        text = font.render("GAME RULES:", 1, (0, 0, 0))
+        text_pos = text.get_rect(centerx=screen.get_width() / 2, centery=screen.get_height()/2)
+        screen.blit(text, text_pos)
+        pg.display.flip()
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                quit()
+            if event.type == pg.KEYDOWN and event.key == pg.K_TAB:
+                start_game = True
+            else:
+                continue
 
     # Main Loop
     going = True
