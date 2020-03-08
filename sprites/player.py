@@ -1,6 +1,8 @@
 import math
 
 import pygame as pg
+
+from sprites.potion2 import Potion2
 from util.load import load_image
 
 
@@ -56,6 +58,9 @@ class Player(pg.sprite.Sprite):
             for y in range(self.attack_ready_bar.get_height()):
                 self.attack_ready_bar.set_at((x, y), pg.Color(100, 100, 100))
 
+        # bomb ready (from potion)
+        self.bomb_ready = False
+
         self.potions = potion_list
 
         # healing animation
@@ -84,8 +89,8 @@ class Player(pg.sprite.Sprite):
 
     def update(self):
         self.handle_keys()
-        is_alive = self.handle_damage()
         self.handle_attack()
+        is_alive = self.handle_damage()
         if self.hitbox_debug:
             self.handle_hitbox_debug()
         return is_alive
@@ -191,9 +196,13 @@ class Player(pg.sprite.Sprite):
         potion_hit_list = pg.sprite.spritecollide(self, self.potions, False)
         for potion in potion_hit_list:
             if self.hurtbox.colliderect(potion):
+                if isinstance(potion, Potion2):
+                    self.bomb_ready = True
+                else:
+                    self.get_heal()
+                # remove potion
                 potion.kill()
                 self.potions.remove(potion)
-                self.get_heal()
 
         self.calc_hitboxes()
 

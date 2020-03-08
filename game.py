@@ -7,6 +7,7 @@ import random
 from sprites.hud import HUD
 from sprites.player import Player
 from sprites.potion import Potion
+from sprites.potion2 import Potion2
 from sprites.wall import Wall
 from sprites.enemy import Enemy
 from util.spawning import chance_spawn
@@ -74,6 +75,9 @@ def main():
     # Tracker
     item_count = defaultdict(lambda: 0)
 
+    # Tracker specifically for special potion; and whether player holds it
+    potion2_present = False
+
     # Main Loop
     going = True
     while going:
@@ -93,7 +97,17 @@ def main():
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                 player.start_attack()
 
-        if random.random() < chance_spawn(item_count[Potion]):  # TODO: Replace me with actual logic!
+            # player bomb
+            if player.bomb_ready and event.type == pg.KEYDOWN and event.key == pg.K_c:
+                potion2_present = False
+                print("BOOM")
+                for enemy in enemy_list:
+                    enemy.kill()
+                enemy_list.clear()
+                allsprites.remove(enemy_list)
+                item_count[Enemy] = 0
+
+        if random.random() < chance_spawn(item_count[Potion]):
             potion = Potion(screen_width, screen_height)
             potion_list.append(potion)
             allsprites.add(potion)
@@ -104,6 +118,14 @@ def main():
             enemy_list.append(enemy)
             allsprites.add(enemy)
             item_count[Enemy] = item_count[Enemy] + 1
+
+        # a special potion
+        if not potion2_present and random.random() < 0.01:
+            potion = Potion2(screen_width, screen_height)
+            potion_list.append(potion)
+            allsprites.add(potion)
+            potion2_present = True
+            print("bomb acquired")
 
         # update player (movement, attack frame, health)
         if not player.update():
@@ -159,12 +181,16 @@ def main():
                     bullet_list.remove(bullet)
                     bullet.kill()
 
+            # remove potions going off screen
             for potion in potion_list:
                 if potion.rect.y > screen_height-30:
+                    if isinstance(potion, Potion2):
+                        potion2_present = False
                     allsprites.remove(potion)
                     item_count[Potion] = item_count[Potion] - 1
                     potion_list.remove(potion)
                     potion.kill()
+
 
         # draw
         allsprites.update()
