@@ -130,6 +130,7 @@ def main():
                     enemy_list.remove(enemy)
                     item_count[Enemy] = item_count[Enemy] - 1
                     allsprites.remove(enemy)
+                    enemy.kill()
 
                 # get each enemy to go through a 'shoot' cycle; returns None if no bullet generated
                 bullet = enemy.shoot(player.rect.x+50, player.rect.y+50)
@@ -155,6 +156,13 @@ def main():
                 if remove:
                     bullet_list.remove(bullet)
                     bullet.kill()
+
+            for potion in potion_list:
+                if potion.rect.y > screen_height-10:
+                    allsprites.remove(potion)
+                    item_count[Enemy] = item_count[Enemy] - 1
+                    potion_list.remove(potion)
+                    potion.kill()
 
         # draw
         allsprites.update()
