@@ -231,7 +231,7 @@ incoming bandits."""
         allsprites.draw(screen)
         text_surface = score_text.generate_surface('Health: ')
         screen.blit(text_surface,
-                    (screen_width - text_surface.get_width() - 90, screen_height - text_surface.get_height() - 54))
+                    (screen_width - text_surface.get_width() - 100, screen_height - text_surface.get_height() - 45))
         pg.display.flip()
 
         clock.tick(60)
