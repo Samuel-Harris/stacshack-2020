@@ -19,5 +19,5 @@ class HUD(pg.sprite.Sprite):
 
     def update(self):
         if self.player.health < 0:
-            self.player.health = 8  # TODO: Add death mechanics
+            self.player.health = 8
         self.image = self.hearts[8 - self.player.health]
